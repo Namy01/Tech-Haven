@@ -9,6 +9,7 @@ class Timestamp(models.Model):
 
 class Category(Timestamp):
     name = models.CharField(max_length=150, unique=True)
+    image = models.ImageField(upload_to='category/image/' , default="")
 
     def __str__(self):
         return self.name
