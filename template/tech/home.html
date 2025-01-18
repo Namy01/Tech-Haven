@@ -1,0 +1,30 @@
+{% extends 'tech/base.html' %} {% block content %}
+
+<main class="main">
+  {% include "tech/home/intro_slider_container.html" %} 
+  {% include "tech/home/popular.html" %}
+  <div class="mb-4"></div>
+  <!-- End .mb-4 -->
+  {% include "tech/home/add1.html" %}
+  <div class="mb-3"></div>
+  <!-- End .mb-5 -->
+  {% include "tech/home/new_arrival.html" %}
+  <div class="mb-6"></div>
+  <!-- End .mb-6 -->
+  {% include "tech/home/add2.html" %} 
+  {% include "tech/home/deal.html" %}
+  {% include "tech/home/trending.html" %}
+  <div class="mb-5"></div><!-- End .mb-5 -->
+  {% include "tech/home/recomendation.html" %}
+  <div class="mb-4"></div><!-- End .mb-4 -->
+  <div class="container">
+     <hr class="mb-0">
+   </div><!-- End .container -->
+   {% include "tech/home/icons.html" %}
+
+
+
+
+</main>
+
+{% endblock content %}
