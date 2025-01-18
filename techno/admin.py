@@ -1,3 +1,6 @@
 from django.contrib import admin
+from techno.models import Category, Product, Tag
 
-# Register your models here.
+admin.register.site(Product)
+admin.register.site(Category)
+admin.register.site(Tag)
