@@ -8,16 +8,13 @@
             </div><!-- End .heading-left -->
 
            <div class="heading-right">
-                <ul class="nav nav-pills nav-border-anim justify-content-center" role="tablist">
+               <ul class="nav nav-pills nav-border-anim justify-content-center" role="tablist">
+                    {% for tag in tags %}
                     <li class="nav-item">
                         <a class="nav-link active" id="trending-top-link" data-toggle="tab" href="" role="tab" aria-controls="trending-top-tab" aria-selected="true">Top Rated</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="trending-best-link" data-toggle="tab" href="" role="tab" aria-controls="trending-best-tab" aria-selected="false">Best Selling</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="trending-sale-link" data-toggle="tab" href="" role="tab" aria-controls="trending-sale-tab" aria-selected="false">On Sale</a>
-                    </li>
+                    {% endfor %}
+                   
                 </ul>
            </div><!-- End .heading-right -->
         </div><!-- End .heading -->
