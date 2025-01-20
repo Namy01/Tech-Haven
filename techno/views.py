@@ -12,7 +12,9 @@ class HomeView(ListView):
         context = super().get_context_data(**kwargs)
 
         context["categories"] = Category.objects.all().order_by("created_at")[2:10]
+        context["tags"] = Tag.objects.all().order_by("created_at")
         context["recommended"] = Product.objects.exclude(pk__in=[5, 8, 6, 7]).order_by("-created_at")[:10]
+
 
         
         return context

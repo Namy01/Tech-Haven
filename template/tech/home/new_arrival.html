@@ -93,7 +93,7 @@
 
         <!-- Dynamic tab content based on categories -->
         {% for category in categories %}
-        <div class="tab-pane p-0 fade {% if forloop.first %}show active{% endif %}" id="new-{{ category.name|slugify }}-tab" role="tabpanel" aria-labelledby="nav-{{ category.name|slugify }}-tab">
+        <div class="tab-pane p-0 fade" id="new-{{ category.name|slugify }}-tab" role="tabpanel" aria-labelledby="nav-{{ category.name|slugify }}-tab">
             <div class="owl-carousel owl-full carousel-equal-height carousel-with-shadow" data-toggle="owl" 
                 data-owl-options='{
                     "nav": true, 
