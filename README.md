@@ -4,7 +4,9 @@ Tech Haven is a sophisticated e-commerce platform designed to cater to a wide ra
 
 ### Technologies Used:
 Frontend: HTML, CSS, JavaScript (Molla template)
+
 Backend: Django
+
 Database: SQLite
 
 ### Purpose: 
