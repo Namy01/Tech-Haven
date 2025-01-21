@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Product, Tag, Category
+from .models import Advertisement, Product, Tag, Category
 from django.views.generic import ListView, DetailView
 
 class HomeView(ListView):
@@ -14,6 +14,7 @@ class HomeView(ListView):
         context["categories"] = Category.objects.all().order_by("created_at")[2:10]
         context["tags"] = Tag.objects.all().order_by("created_at")
         context["recommended"] = Product.objects.exclude(pk__in=[5, 8, 6, 7]).order_by("-created_at")[:10]
+        context["add1"] = Advertisement.objects.all()[:3]
 
 
         
