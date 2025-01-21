@@ -1,4 +1,4 @@
-##🌐 Tech Haven
+##Tech Haven 🌐 
 
 About the Project: Tech Haven is a sophisticated e-commerce platform designed to cater to a wide range of electronic products, including laptops, headphones, mobile phones, speakers, TVs, and Bluetooth devices. Utilizing the Molla template for frontend design, I, Namrata Neupane, was solely responsible for the entire backend development. This project served as an in-depth learning experience, significantly enhancing my skills in Django and e-commerce development.
 
