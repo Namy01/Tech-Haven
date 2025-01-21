@@ -14,6 +14,12 @@ class Category(Timestamp):
     def __str__(self):
         return self.name
     
+class Addcategory(Timestamp):
+    name = models.CharField(max_length=150, unique=True)
+    def __str__(self):
+        return self.name
+
+    
 class Tag(Timestamp):
     name = models.CharField(max_length=150, unique=True)
 
@@ -40,6 +46,16 @@ class Product(Timestamp):
 
     def __str__(self):
         return self.name
+    
+class Advertisement(Timestamp):
+    name = models.CharField(max_length=250)
+    previous_price = models.PositiveIntegerField()
+    price = models.PositiveIntegerField()
+    description = models.TextField()
+    Addcategory = models.ForeignKey(Addcategory, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='Add/images/')
 
+    def __str__(self):
+        return self.name
 
 
