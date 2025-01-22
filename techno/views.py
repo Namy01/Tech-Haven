@@ -15,9 +15,6 @@ class HomeView(ListView):
         context["tags"] = Tag.objects.all().order_by("created_at")
         context["recommended"] = Product.objects.exclude(pk__in=[5, 8, 6, 7]).order_by("-created_at")[:10]
         context["add1"] = Advertisement.objects.all()[:3]
-
-
-        
         return context
 
 
