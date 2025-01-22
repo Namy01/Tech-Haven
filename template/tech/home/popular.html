@@ -6,7 +6,7 @@
         <div class="row">
             {% for category in categories %}
             <div class="col-6 col-sm-4 col-lg-2">
-                <a href="category.html" class="cat-block">
+                <a href="{% url 'Product-by-category' category.id %}" class="cat-block">
                     <figure>
                         <span>
                             <img src="{{ category.image.url }}" alt="Category image">

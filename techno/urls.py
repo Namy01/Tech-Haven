@@ -4,4 +4,8 @@ from techno import views
 
 urlpatterns = [
     path("", views.HomeView.as_view()),
+    path("list-view", views.ProductListView.as_view(), name= "list-view"),
+    path("Product-by-category/<int:category_id>/", views.Productbycategory.as_view(), name= "Product-by-category"),
+    path("Product-by-tag/<int:tag_id>/", views.Productbytag.as_view(), name= "Product-by-tag"),
+
 ]
