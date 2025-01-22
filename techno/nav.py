@@ -2,7 +2,7 @@ from .models import Product, ProductImage, Category, Addcategory, Advertisement,
 
 def navigations(request):
     tags = Tag.objects.all().order_by("created_at")
-    categories_nav = Category.objects.all()[:5]
+    categories_nav = Category.objects.all()[:7]
 
     return{
         "tags" : tags,

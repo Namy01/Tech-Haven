@@ -212,14 +212,14 @@
                             <a href="index.html" class="sf-with-ul">Home</a>
   
                         </li>
-                        {% for category in categories %}
+                        {% for category in categories_nav %}
                         <li>
                             <a href="category.html" class="sf-with-ul">{{ category.name|title }}</a>
                         </li>
                         {% endfor %}
                        
                         <li>
-                            <a href="#" class="sf-with-ul">Top products</a>
+                            <a href="#" class="sf-with-ul">Offers</a>
 
                             <ul>
                                 {% for tag in tags %}
