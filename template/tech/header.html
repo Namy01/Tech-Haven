@@ -208,6 +208,7 @@
             <div class="header-center">
                 <nav class="main-nav">
                     <ul class="menu sf-arrows">
+<<<<<<< HEAD
                         <li class="{% if request.path == '/' %}active{% endif %}">
                             <a href="/" class="sf-with-ul">Home</a>
                         </li>
@@ -221,11 +222,28 @@
 
 
                         <li>
+=======
+                        <li class=" active">
+                            <a href="index.html" class="sf-with-ul">Home</a>
+  
+                        </li>
+                        {% for category in categories_nav %}
+                        <li>
+                            <a href="category.html" class="sf-with-ul">{{ category.name|title }}</a>
+                        </li>
+                        {% endfor %}
+                       
+                        <li>
+>>>>>>> 23ae40177c1685d026168855d97ac3cd74c5db18
                             <a href="#" class="sf-with-ul">Offers</a>
 
                             <ul>
                                 {% for tag in tags %}
+<<<<<<< HEAD
                                 <li> <a href="{% url 'Product-by-tag' tag.id %}">{{ tag.name }}</a></li>
+=======
+                                <li> <a href="about.html">{{ tag.name }}</a></li>
+>>>>>>> 23ae40177c1685d026168855d97ac3cd74c5db18
                                       {% endfor %}  
                                     </li>
                             </ul>
