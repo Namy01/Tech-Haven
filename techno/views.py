@@ -1,6 +1,10 @@
-from django.shortcuts import render
-from .models import Advertisement, Product, Tag, Category
-from django.views.generic import ListView, DetailView, TemplateView
+from django.shortcuts import render, get_object_or_404, redirect
+from django.views import View
+from django.contrib import messages
+from techno.forms import ReviewForm
+from django.urls import reverse_lazy
+from .models import Advertisement, Product, Review, Tag, Category
+from django.views.generic import ListView, DetailView, TemplateView, CreateView
 
 class HomeView(ListView):
     model = Product
@@ -59,6 +63,35 @@ class ProductDetail(DetailView):
 
     def get_queryset(self):
         return super().get_queryset()
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        product = self.get_object()
+        context["reviews"] = Review.objects.filter( product=product)
+        return context
 
+class ReviewView(View):
+    def post(self, request, *args, **kwargs):
+        form = ReviewForm(request.POST, request.FILES)
+        product_id = request.POST.get("product")
+        
+        if not product_id:
+            messages.error(request, "Product not found.")
+            return redirect("some_fallback_url")
+        
+        product = get_object_or_404(Product, pk=product_id)
 
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.product = product
+            review.save()
+            messages.success(request, "Thank you for your review!")
+            return redirect("product-detail", pk=product_id)
 
+        
+        return render(
+            request,
+            "tech/product_detail.html",
+            {"product": product, "form": form}
+        )
+    

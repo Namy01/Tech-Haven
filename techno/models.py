@@ -25,6 +25,8 @@ class Tag(Timestamp):
 
     def __str__(self):
         return self.name
+    
+
 
 class ProductImage(models.Model):
     image = models.ImageField(upload_to='products/gallery/')
@@ -41,7 +43,6 @@ class Product(Timestamp):
     short_description = models.TextField(default="")
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     tags = models.ManyToManyField(Tag)
-    review_count = models.PositiveBigIntegerField(default=0)
     main_image = models.ImageField(upload_to='products/main_images/')
     gallery_images = models.ManyToManyField(ProductImage)
 
@@ -59,4 +60,17 @@ class Advertisement(Timestamp):
     def __str__(self):
         return self.name
 
+
+
+class Review(Timestamp):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    review = models. CharField(max_length=50)
+    description = models.TextField()
+    name = models.CharField(max_length=50)
+    stars = models.IntegerField(choices=[(i, i) for i in range(1, 6)])
+    email = models.EmailField()
+    profile = models.ImageField(upload_to='reviewer/profile/', default="")
+
+    def __str__(self):
+        return self.name
 

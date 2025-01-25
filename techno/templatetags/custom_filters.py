@@ -9,3 +9,7 @@ def subtract(value, arg):
         return value - arg
     except (TypeError, ValueError):
         return 0
+
+@register.filter
+def stars(value):
+    return "★" * int(value)

@@ -10507,7 +10507,6 @@ button:focus {
 .product-gallery-item:before {
   opacity: 0;
   visibility: hidden;
-  
 }
 .product-gallery-item:after {
   visibility: visible;
