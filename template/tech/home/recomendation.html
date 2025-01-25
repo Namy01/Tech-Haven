@@ -1,4 +1,5 @@
 {% load static %}
+{% load custom_filters %}
 <div class="container for-you">
     <div class="heading heading-flex mb-3">
         <div class="heading-left">
@@ -55,10 +56,15 @@
                          
                         </div><!-- End .product-price -->
                         <div class="ratings-container">
-                            <div class="ratings">
-                                <div class="ratings-val" style="width: 40%;"></div><!-- End .ratings-val -->
-                            </div><!-- End .ratings -->
-                            <span class="ratings-text"> (review {{ recomende.review_count}})</span>
+                            <h5>
+                                <span style="color: gold;">
+                                    {{ recomende.review|stars }}
+                                </span>
+                            </h5>
+                            <h6>
+                                <span class="ratings-text"> (review {{ recomende.reviews.count }})
+                                </span>
+                            </h6>
                         </div><!-- End .rating-container -->
 
                         <div class="product-nav product-nav-dots">

@@ -1,5 +1,6 @@
 {% extends "tech/base.html" %}
 {% load static %}
+{% load custom_filters %}
 {% block content %}
 <main class="main">
     
@@ -68,10 +69,14 @@
                                    Rs {{ product.price }}
                                 </div><!-- End .product-price -->
                                 <div class="ratings-container">
-                                    <div class="ratings">
-                                        <div class="ratings-val" style="width: 0%;"></div><!-- End .ratings-val -->
+                                   
+                                        <div class="stars">
+                                            <span style="color: gold;">
+                                                {{ product.review|stars }}
+                                            </span>
+                                        
                                     </div><!-- End .ratings -->
-                                    <span class="ratings-text">( 0 Reviews )</span>
+                                    <span class="ratings-text">{{review_count}}</span>
                                 </div><!-- End .rating-container -->
 
                                 <div class="product-nav product-nav-thumbs">

@@ -1,4 +1,5 @@
 {% load static %}
+{% load custom_filters %}
 <div class="container new-arrivals">
     <div class="heading heading-flex mb-3">
         <div class="heading-left">
@@ -8,19 +9,16 @@
         <div class="heading-right">
             <ul class="nav nav-pills nav-border-anim justify-content-center" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" id="new-all-link" data-toggle="tab" href="#new-all-tab" role="tab" aria-controls="new-all-tab" aria-selected="true">All</a>
+                    <a class="nav-link active" id="new-all-link" data-toggle="tab" href="#new-all-tab" role="tab"
+                        aria-controls="new-all-tab" aria-selected="true">All</a>
                 </li>
                 {% for category in categories %}
                 <li class="nav-item">
-                    <a class="nav-link" 
-   id="nav-{{ category.name|slugify }}-tab" 
-   data-toggle="tab" 
-   href="#new-{{ category.name|slugify }}-tab" 
-   role="tab" 
-   aria-controls="new-{{ category.name|slugify }}-tab" 
-   aria-selected="false">
-    {{ category.name }}
-</a>
+                    <a class="nav-link" id="nav-{{ category.name|slugify }}-tab" data-toggle="tab"
+                        href="#new-{{ category.name|slugify }}-tab" role="tab"
+                        aria-controls="new-{{ category.name|slugify }}-tab" aria-selected="false">
+                        {{ category.name }}
+                    </a>
 
                 </li>
                 {% endfor %}
@@ -31,7 +29,7 @@
     <div class="tab-content tab-content-carousel just-action-icons-sm">
         <!-- Default tab content for all products -->
         <div class="tab-pane p-0 fade show active" id="new-all-tab" role="tabpanel" aria-labelledby="new-all-link">
-            <div class="owl-carousel owl-full carousel-equal-height carousel-with-shadow" data-toggle="owl" 
+            <div class="owl-carousel owl-full carousel-equal-height carousel-with-shadow" data-toggle="owl"
                 data-owl-options='{
                     "nav": true, 
                     "dots": true,
@@ -50,13 +48,14 @@
                     <figure class="product-media">
                         {% for tag in product.tags.all %}
                         {% if tag|stringformat:"s" == "Sale" %}
-                            <span class="product-label label-circle label-sale">{{ tag }}</span>
+                        <span class="product-label label-circle label-sale">{{ tag }}</span>
                         {% elif tag|stringformat:"s" == "New" %}
-                            <span class="product-label label-circle label-new">{{ tag }}</span>
+                        <span class="product-label label-circle label-new">{{ tag }}</span>
                         {% elif tag|stringformat:"s" == "Top" %}
-                            <span class="product-label label-circle label-top">{{ tag }}</span>
+                        <span class="product-label label-circle label-top">{{ tag }}</span>
                         {% else %}
-                            <span style="background-color: rgb(69, 69, 145); color: azure;" class="product-label label-circle">{{ tag }}</span>
+                        <span style="background-color: rgb(69, 69, 145); color: azure;"
+                            class="product-label label-circle">{{ tag }}</span>
                         {% endif %}
                         {% endfor %}
                         <a href="">
@@ -80,10 +79,15 @@
                         <h3 class="product-title"><a href="">{{ product.name }}</a></h3><!-- End .product-title -->
                         <div class="product-price">{{ product.price }}</div><!-- End .product-price -->
                         <div class="ratings-container">
-                            <div class="ratings">
-                                <div class="ratings-val" style="width: 100%;"></div><!-- End .ratings-val -->
-                            </div><!-- End .ratings -->
-                            <span class="ratings-text"> (review {{ recomende.review_count}})</span>
+                            <h5>
+                                <span style="color: gold;">
+                                    {{ product.review|stars }}
+                                </span>
+                            </h5>
+                            <h6>
+                                <span class="ratings-text"> (review {{ product.reviews.count }})
+                                </span>
+                            </h6>
                         </div><!-- End .rating-container -->
                     </div><!-- End .product-body -->
                 </div><!-- End .product -->
@@ -93,8 +97,9 @@
 
         <!-- Dynamic tab content based on categories -->
         {% for category in categories %}
-        <div class="tab-pane p-0 fade" id="new-{{ category.name|slugify }}-tab" role="tabpanel" aria-labelledby="nav-{{ category.name|slugify }}-tab">
-            <div class="owl-carousel owl-full carousel-equal-height carousel-with-shadow" data-toggle="owl" 
+        <div class="tab-pane p-0 fade" id="new-{{ category.name|slugify }}-tab" role="tabpanel"
+            aria-labelledby="nav-{{ category.name|slugify }}-tab">
+            <div class="owl-carousel owl-full carousel-equal-height carousel-with-shadow" data-toggle="owl"
                 data-owl-options='{
                     "nav": true, 
                     "dots": true,
@@ -113,13 +118,14 @@
                     <figure class="product-media">
                         {% for tag in product.tags.all %}
                         {% if tag|stringformat:"s" == "Sale" %}
-                            <span class="product-label label-circle label-sale">{{ tag }}</span>
+                        <span class="product-label label-circle label-sale">{{ tag }}</span>
                         {% elif tag|stringformat:"s" == "New" %}
-                            <span class="product-label label-circle label-new">{{ tag }}</span>
+                        <span class="product-label label-circle label-new">{{ tag }}</span>
                         {% elif tag|stringformat:"s" == "Top" %}
-                            <span class="product-label label-circle label-top">{{ tag }}</span>
+                        <span class="product-label label-circle label-top">{{ tag }}</span>
                         {% else %}
-                            <span style="background-color: rgb(69, 69, 145); color: azure;" class="product-label label-circle">{{ tag }}</span>
+                        <span style="background-color: rgb(69, 69, 145); color: azure;"
+                            class="product-label label-circle">{{ tag }}</span>
                         {% endif %}
                         {% endfor %}
                         <a href="{% url 'product-detail' product.id %}">
@@ -143,16 +149,22 @@
                         <h3 class="product-title"><a href="">{{ product.name }} </a></h3><!-- End .product-title -->
                         <div class="product-price">{{ product.price }}</div><!-- End .product-price -->
                         <div class="ratings-container">
-                            <div class="ratings">
-                                <div class="ratings-val" style="width: 80%;"></div><!-- End .ratings-val -->
-                            </div><!-- End .ratings -->
-                            <span class="ratings-text"> (review {{ recomende.review_count}})</span>
+                            <h5>
+                                <span style="color: gold;">
+                                    {{ product.review|stars }}
+                                </span>
+                            </h5>
+                            <h6>
+                                <span class="ratings-text"> (review {{ product.reviews.count }})
+                                </span>
+                            </h6>
                         </div><!-- End .rating-container -->
 
                         <div class="product-nav product-nav-dots">
                             <a href="#" style="background: #edd2c8;"><span class="sr-only">Color name</span></a>
                             <a href="#" style="background: #eaeaec;"><span class="sr-only">Color name</span></a>
-                            <a href="#" class="active" style="background: #333333;"><span class="sr-only">Color name</span></a>
+                            <a href="#" class="active" style="background: #333333;"><span class="sr-only">Color
+                                    name</span></a>
                         </div><!-- End .product-nav -->
                     </div><!-- End .product-body -->
                 </div><!-- End .product -->

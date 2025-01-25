@@ -1,4 +1,5 @@
 {% load static %}
+{% load custom_filters %}
 <div class="bg-light pt-5 pb-6">
     <div class="container trending-products">
         <div class="heading heading-flex mb-3">
@@ -92,10 +93,15 @@
                                         {{ product.price }}
                                     </div><!-- End .product-price -->
                                     <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 100%;"></div><!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                        <span class="ratings-text">( 4 Reviews )</span>
+                                        <h5>
+                                            <span style="color: gold;">
+                                                {{ product.review|stars }}
+                                            </span>
+                                        </h5>
+                                        <h6>
+                                            <span class="ratings-text"> (review {{ product.reviews.count }})
+                                            </span>
+                                        </h6>
                                     </div><!-- End .rating-container -->
 
                                     <div class="product-nav product-nav-dots">
@@ -168,10 +174,15 @@
                                         {{ product.price }}
                                     </div><!-- End .product-price -->
                                     <div class="ratings-container">
-                                        <div class="ratings">
-                                            <div class="ratings-val" style="width: 80%;"></div><!-- End .ratings-val -->
-                                        </div><!-- End .ratings -->
-                                        <span class="ratings-text">( 4 Reviews )</span>
+                                        <h5>
+                                            <span style="color: gold;">
+                                                {{ product.review|stars }}
+                                            </span>
+                                        </h5>
+                                        <h6>
+                                            <span class="ratings-text"> (review {{ product.reviews.count }})
+                                            </span>
+                                        </h6>
                                     </div><!-- End .rating-container -->
 
                                     <div class="product-nav product-nav-dots">

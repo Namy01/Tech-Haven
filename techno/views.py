@@ -5,6 +5,7 @@ from techno.forms import ReviewForm
 from django.urls import reverse_lazy
 from .models import Advertisement, Product, Review, Tag, Category
 from django.views.generic import ListView, DetailView, TemplateView, CreateView
+from django.db.models import Avg
 
 class HomeView(ListView):
     model = Product
@@ -19,6 +20,7 @@ class HomeView(ListView):
         context["tags"] = Tag.objects.all().order_by("created_at")
         context["recommended"] = Product.objects.exclude(pk__in=[5, 8, 6, 7]).order_by("-created_at")[:10]
         context["add1"] = Advertisement.objects.all()[:3]
+        
         return context
 
 class ProductListView(ListView):
@@ -75,8 +77,17 @@ class ProductDetail(DetailView):
         
         total_stars = sum([review.stars for review in product.reviews.all()])
         review_count = product.reviews.count()
+       
         context["total_stars"] = total_stars
         context["review_count"] = review_count
+
+
+        review_data = product.reviews.aggregate(avg_stars=Avg('stars'))
+        average_stars = review_data['avg_stars'] if review_data['avg_stars'] is not None else 1
+        context["average_stars"] = average_stars
+
+        product.review = int(average_stars) if average_stars is not None else 1
+        product.save()
         return context
 
 class ReviewView(View):

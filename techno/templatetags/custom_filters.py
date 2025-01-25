@@ -12,7 +12,14 @@ def subtract(value, arg):
 
 @register.filter
 def stars(value):
-    return "★" * int(value)
+    try:
+        value = float(value)
+        full_stars = int(value)
+        half_star = 1 if value % 1 >= 0.5 else 0
+        empty_stars = 5 - full_stars - half_star
+        return "★" * full_stars + "☆" * half_star + "☆" * empty_stars
+    except (ValueError, TypeError):
+        return ""
 
 @register.filter
 def average_star(value, args):
