@@ -17,6 +17,8 @@
                         Showing <span>{{ products|length }} of {{ procount|length }}</span> Products
                     </div><!-- End .toolbox-info -->
                 </div><!-- End .toolbox-center -->
+                <br>
+                
 
                 <div class="toolbox-right">
                     <div class="toolbox-sort">
@@ -36,8 +38,8 @@
 
             <div class="products">
                 <div class="row">
-                    {% for product in products %}
                     
+                    {% for product in products %}
                     <div class="col-6 col-md-4 col-lg-4 col-xl-3">
                         <div class="product product-7 text-center">
                             <figure class="product-media">
