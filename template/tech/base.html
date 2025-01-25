@@ -30,7 +30,7 @@
     <link rel="stylesheet" href="{% static 'assets/css/plugins/jquery.countdown.css' %}">
     <!-- Main CSS File -->
     <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/css/skins/skin-demo-4.css' %}">
+   
     <link rel="stylesheet" href="{% static 'assets/css/demos/demo-4.css' %}">
 </head>
 
@@ -56,6 +56,69 @@
     <!-- Main JS File -->
     <script src="{% static 'assets/js/main.js' %}"></script>
     <script src="{% static 'assets/js/demos/demo-4.js' %}"></script>
+    
+    
+    <script>
+        $(document).ready(function () {
+            // When a gallery image is clicked
+            $('.product-gallery-item').on('click', function (e) {
+                e.preventDefault();
+                
+                // Remove 'active' class from all gallery items
+                $('.product-gallery-item').removeClass('active');
+                
+                // Add 'active' class to the clicked item
+                $(this).addClass('active');
+                
+                // Change the main image to the clicked image
+                var newImage = $(this).data('image');
+                var newZoomImage = $(this).data('zoom-image');
+                $('#product-zoom').attr('src', newImage);
+                $('#product-zoom').attr('data-zoom-image', newZoomImage);
+                
+                // Ensure correct border positioning
+                fixActiveBorder(this);
+                
+                // Reinitialize zoom lens size
+                setZoomLensSize();
+            });
+    
+            // Function to fix active border alignment
+            function fixActiveBorder(element) {
+                var $el = $(element);
+                var width = $el.outerWidth();
+                var height = $el.outerHeight();
+                var offset = $el.position();
+                
+                $el.css({
+                    'width': width + 'px',
+                    'height': height + 'px',
+                    'box-sizing': 'border-box'
+                });
+            }
+    
+            // Function to initialize zoom lens size based on image size
+            function setZoomLensSize() {
+                var imageWidth = $('#product-zoom').width();
+                var imageHeight = $('#product-zoom').height();
+                $('#product-zoom').ezPlus({
+                    zoomType: 'window',
+                    lensShape: 'square',
+                    lensSize: imageWidth,
+                    borderSize: 1,
+                    borderColour: '#888',
+                    responsive: true,
+                });
+            }
+    
+            // Initialize the zoom lens size when the page is loaded
+            setZoomLensSize();
+        });
+    </script>
+    
+        
+        
 </body>
+
 
 </html>

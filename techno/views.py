@@ -51,4 +51,14 @@ class Productbytag(ListView):
              tags__id = self.kwargs["tag_id"],
         ).order_by("-created_at")
         return query
+    
+class ProductDetail(DetailView):
+    model = Product
+    template_name = "tech/product_detail.html"
+    context_object_name = "product"
+
+    def get_queryset(self):
+        return super().get_queryset()
+
+
 

@@ -31,7 +31,7 @@
                     {% endfor %}
                     
                     
-                        <a href="">
+                        <a href="{% url 'product-detail' recomende.id %}">
                             <img src="{{ recomende.main_image.url }}" alt="Product image" class="product-image" width="300px">
                         </a>
 

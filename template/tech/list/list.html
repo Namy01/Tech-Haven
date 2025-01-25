@@ -43,7 +43,7 @@
                     <div class="col-6 col-md-4 col-lg-4 col-xl-3">
                         <div class="product product-7 text-center">
                             <figure class="product-media">
-                                <a href="product.html">
+                                <a href="{% url 'product-detail' product.id %}">
                                     <img src="{{ product.main_image.url }}" alt="Product image" class="product-image">
                                 </a>
 
