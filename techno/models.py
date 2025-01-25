@@ -63,7 +63,7 @@ class Advertisement(Timestamp):
 
 
 class Review(Timestamp):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='reviews')
     review = models. CharField(max_length=50)
     description = models.TextField()
     name = models.CharField(max_length=50)

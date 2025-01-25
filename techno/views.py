@@ -68,6 +68,15 @@ class ProductDetail(DetailView):
         context = super().get_context_data(**kwargs)
         product = self.get_object()
         context["reviews"] = Review.objects.filter( product=product)
+        context["related_product"] = Product.objects.filter(
+            category=product.category
+        ).exclude(id=product.id)
+
+        
+        total_stars = sum([review.stars for review in product.reviews.all()])
+        review_count = product.reviews.count()
+        context["total_stars"] = total_stars
+        context["review_count"] = review_count
         return context
 
 class ReviewView(View):
