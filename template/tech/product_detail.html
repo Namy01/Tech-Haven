@@ -92,16 +92,18 @@
                             <p>{{ product.short_description|safe }} </p>
                         </div><!-- End .product-content -->
                         <div class="details-filter-row details-row-size">
-                            <label for="qty">Qty:</label>
-                            <div class="product-details-quantity">
-                                <input type="number" id="qty" class="form-control" value="1" min="1" max="10" step="1"
-                                    data-decimals="0" required>
-                            </div><!-- End .product-details-quantity -->
-                        </div><!-- End .details-filter-row -->
-
-                        <div class="product-details-action">
-                            <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-
+                            <form action="{% url 'cart-add' product_id=product.id %}" method="post">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label for="qty">Qty:</label>
+                                    <div class="product-details-quantity">
+                                        <input type="number" id="qty" name="qty" class="form-control" value="1" min="1" max="10" step="1" data-decimals="0" required>
+                                    </div>
+                                </div>
+                                <div class="product-details-action">
+                                    <button type="submit" class="btn-product btn-cart"><span>add to cart</span></button>
+                                </div>
+                            </form>
                             <div class="details-action-wrapper">
                                 <a href="#" class="btn-product btn-wishlist" title="Wishlist"><span>Add to
                                         Wishlist</span></a>

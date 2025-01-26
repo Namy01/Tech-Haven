@@ -137,7 +137,35 @@
         });
     </script>
      
+    </script>
+     <script>
+         $(document).ready(function () {
+             $('#shipping-form').on('submit', function (e) {
+                 e.preventDefault();
      
+                 var shippingCost = $('input[name="shipping"]:checked').val();
+                 var couponCode = $('#coupon_code').val();
+     
+                 $.ajax({
+                     type: 'POST',
+                     url: '{% url "update_shipping" %}',  // Ensure this URL matches your Django route name
+                     data: {
+                         'shipping': shippingCost,
+                         'coupon_code': couponCode,
+                         'csrfmiddlewaretoken': '{{ csrf_token }}'
+                     },
+                     success: function (response) {
+                         $('#total').text('Updated Total: ' + response.total);
+                     },
+                     error: function (xhr, status, error) {
+                         alert('An error occurred: ' + xhr.responseText);
+                     }
+                 });
+             });
+         });
+     </script>
+     
+
 </body>
 
 

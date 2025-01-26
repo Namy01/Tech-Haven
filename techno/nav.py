@@ -6,10 +6,13 @@ def navigations(request):
     procount = Product.objects.all()
     
     
+    
+    
     return{
         "tags" : tags,
         "categories_nav" : categories_nav,
         "procount": procount,
+        
     }
 
     

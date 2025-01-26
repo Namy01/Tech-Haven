@@ -1,3 +1,4 @@
+
 <aside class="col-lg-3">
     <div class="summary summary-cart">
         <h3 class="summary-title">Cart Total</h3><!-- End .summary-title -->
@@ -6,51 +7,89 @@
             <tbody>
                 <tr class="summary-subtotal">
                     <td>Subtotal:</td>
-                    <td>$160.00</td>
+                    <td>Rs {{ subtotal }}</td>
                 </tr><!-- End .summary-subtotal -->
                 <tr class="summary-shipping">
                     <td>Shipping:</td>
                     <td>&nbsp;</td>
                 </tr>
 
-                <tr class="summary-shipping-row">
-                    <td>
-                        <div class="custom-control custom-radio">
-                            <input type="radio" id="free-shipping" name="shipping" class="custom-control-input">
-                            <label class="custom-control-label" for="free-shipping">Free Shipping</label>
-                        </div><!-- End .custom-control -->
-                    </td>
-                    <td>$0.00</td>
-                </tr><!-- End .summary-shipping-row -->
+                <form action="{% url 'update_shipping' %}" method="post" id="shipping-form">
+                    {% csrf_token %}
 
-                <tr class="summary-shipping-row">
-                    <td>
-                        <div class="custom-control custom-radio">
-                            <input type="radio" id="standart-shipping" name="shipping" class="custom-control-input">
-                            <label class="custom-control-label" for="standart-shipping">Standart:</label>
-                        </div><!-- End .custom-control -->
-                    </td>
-                    <td>$10.00</td>
-                </tr><!-- End .summary-shipping-row -->
-
-                <tr class="summary-shipping-row">
-                    <td>
-                        <div class="custom-control custom-radio">
-                            <input type="radio" id="express-shipping" name="shipping" class="custom-control-input">
-                            <label class="custom-control-label" for="express-shipping">Express:</label>
-                        </div><!-- End .custom-control -->
-                    </td>
-                    <td>$20.00</td>
-                </tr><!-- End .summary-shipping-row -->
-
-                <tr class="summary-shipping-estimate">
-                    <td>Estimate for Your Country<br> <a href="dashboard.html">Change address</a></td>
-                    <td>&nbsp;</td>
-                </tr><!-- End .summary-shipping-estimate -->
-
-                <tr class="summary-total">
-                    <td>Total:</td>
-                    <td>$160.00</td>
+                
+                    <tr class="summary-shipping-row">
+                        <td>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="free-shipping" name="shipping" value="0" class="custom-control-input shipping"
+                                    {% if selected_shipping == 0 %}checked{% endif %}>
+                                <label class="custom-control-label" for="free-shipping">Free Shipping</label>
+                            </div>
+                        </td>
+                        <td>Rs 0</td>
+                    </tr>
+                
+                    <tr class="summary-shipping-row">
+                        <td>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" id="standard-shipping" name="shipping" value="100" class="custom-control-input shipping"
+                                    {% if selected_shipping == 100 %}checked{% endif %}>
+                                <label class="custom-control-label" for="standard-shipping">Standard:</label>
+                            </div>
+                        </td>
+                        <td>Rs 100</td>
+                    </tr>
+                
+                    <tr class="summary-shipping-row">
+                        <td>
+                            <div class="custom-control custom-radio">
+                                <input type="radio"  id="express-shipping"  name="shipping" value="200" class="custom-control-input shipping"
+                                    {% if selected_shipping == 200 %}checked{% endif %}>
+                                <label class="custom-control-label" for="express-shipping">Express:</label>
+                            </div>
+                        </td>
+                        <td>Rs 200</td>
+                    </tr>
+                    <tr class="summary-shipping-row">
+                        <td>
+                            <tr>
+                                <td>Apply Coupon</td>
+                                <td>
+                                    <div >
+                                        <div class="cart-discount">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" name="coupon_code" id="coupon_code" value="{{ coupon_code }}" required
+                                                        placeholder="coupon code">
+                                                    
+                                                </div><!-- End .input-group -->
+                                           
+                                        </div><!-- End .cart-discount -->
+                                        </div>
+                                </td>
+                                
+                            </tr>
+                        </td>
+                        
+                    </tr>
+                
+                    
+                    <tr>
+                        <td colspan="2">
+                            <button type="submit" class="btn btn-primary">Update Shipping</button>
+                        </td>
+                    </tr>
+                </form>
+                
+            
+                    <tr>
+                        <td>Total:</td>
+                        <td>
+                            <div id="total"> </div>
+                        </td>
+                    </tr>
+                  
+              
+                
                 </tr><!-- End .summary-total -->
             </tbody>
         </table><!-- End .table table-summary -->

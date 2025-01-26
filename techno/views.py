@@ -1,11 +1,13 @@
+from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
 from django.contrib import messages
 from techno.forms import ReviewForm
 from django.urls import reverse_lazy
-from .models import Advertisement, Product, Review, Tag, Category
+from .models import Advertisement, Cart, CartItem, Product, Review, Tag, Category
 from django.views.generic import ListView, DetailView, TemplateView, CreateView
 from django.db.models import Avg
+
 
 class HomeView(ListView):
     model = Product
@@ -113,5 +115,89 @@ class Quickview(DetailView):
     model = Product
     template_name = "tech/pop_ups/quick_view.html"
     context_object_name = "product"
+
+
+
+
+
+class AddToCartView(View):
+    def post(self, request, product_id):
+        product = get_object_or_404(Product, id=product_id)
+
+        
+        if request.user.is_authenticated:
+            cart, _ = Cart.objects.get_or_create(user=request.user, is_active=True)
+        else:
+            session_key = request.session.session_key or request.session.create()
+            cart, _ = Cart.objects.get_or_create(session_key=session_key, is_active=True)
+
+        
+        cart_item, _ = CartItem.objects.get_or_create(cart=cart, product=product)
+        cart_item.quantity += int(request.POST.get('quantity', 1))
+        cart_item.save()
+
+        return redirect('cart_detail')
+
+
+class RemoveFromCartView(View):
+    def post(self, request, cart_item_id):
+        cart_item = get_object_or_404(CartItem, id=cart_item_id)
+        cart_item.delete()
+        return redirect('cart_detail')
+
+
+
+class UpdateCartView(View):
+    def post(self, request, cart_item_id):
+        cart_item = get_object_or_404(CartItem, id=cart_item_id)
+        new_quantity = int(request.POST.get('quantity', 1))
+        if new_quantity > 0:
+            cart_item.quantity = new_quantity
+            cart_item.save()
+        return redirect('cart_detail')
+
+
+class UpdateShippingView(View):
+    def post(self, request):
+        shipping_cost = int(request.POST.get("shipping", 0))
+        cart = Cart.objects.get(user=request.user, is_active=True)
+        cart.shipping_cost = shipping_cost
+
+        coupon_code = int(request.POST.get("coupon_code", 0))
+        coupon = 12345
+
+        if coupon_code == coupon:
+            cart.discount_cost = 100
+        else:
+            cart.discount_cost = 0
+
+        cart.save()
+
+        request.session['selected_shipping'] = shipping_cost
+        request.session['selected_coupon'] = coupon_code if coupon_code == coupon else None
+
+        total = cart.get_total()
+        return JsonResponse({"total": total}) 
+
+class CartDetailView(View):
+    def get(self, request):
+        cart = Cart.objects.get(user=request.user, is_active=True)
+        selected_shipping = request.session.get('selected_shipping', 0)  # Default to 0
+
+        context = {
+            "cart": cart,
+            "cart_items": cart.items.all(),
+            "subtotal": cart.get_subtotal(),
+            "total": cart.get_total(),
+            "selected_shipping": selected_shipping,
+        }
+        return render(request, "tech/cart/cart.html", context)
+    
+
+     
+
+
+
+    
 
     

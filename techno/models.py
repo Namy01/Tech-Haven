@@ -75,4 +75,35 @@ class Review(Timestamp):
 
     def __str__(self):
         return self.name
+    
+class Cart(Timestamp):
+    user = models.ForeignKey('auth.User', on_delete=models.CASCADE, null=True, blank=True)
+    session_key = models.CharField(max_length=255, blank=True, null=True)  # For guest users
+    is_active = models.BooleanField(default=True)  
+    shipping_cost = models.IntegerField(default=0)
+    discount_cost = models.IntegerField(default=0)
+
+    def __str__(self):
+        return f"Cart {self.id} - {'Guest' if not self.user else self.user.username}"
+
+    def get_subtotal(self):
+        return sum(item.get_total_price() for item in self.items.all())
+
+    def get_total(self):
+        return self.get_subtotal() + self.shipping_cost - self.discount_cost
+
+
+class CartItem(Timestamp):
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE, related_name="items")
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
+
+    def __str__(self):
+        return f"{self.product.name} ({self.quantity})"
+
+    def get_total_price(self):
+        return self.product.price * self.quantity
+
+    
+
 
