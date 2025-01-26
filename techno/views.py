@@ -75,12 +75,6 @@ class ProductDetail(DetailView):
         ).exclude(id=product.id)
 
         
-        total_stars = sum([review.stars for review in product.reviews.all()])
-        review_count = product.reviews.count()
-       
-        context["total_stars"] = total_stars
-        context["review_count"] = review_count
-
 
         review_data = product.reviews.aggregate(avg_stars=Avg('stars'))
         average_stars = review_data['avg_stars'] if review_data['avg_stars'] is not None else 1
@@ -114,4 +108,10 @@ class ReviewView(View):
             "tech/product_detail.html",
             {"product": product, "form": form}
         )
+
+class Quickview(DetailView):
+    model = Product
+    template_name = "tech/pop_ups/quick_view.html"
+    context_object_name = "product"
+
     

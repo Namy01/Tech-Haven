@@ -41,6 +41,7 @@ class Product(Timestamp):
     price = models.PositiveIntegerField()
     stock = models.PositiveIntegerField(default=0)
     short_description = models.TextField(default="")
+    additional_info = models.TextField(default="")
     review = models.PositiveSmallIntegerField(default=1)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     tags = models.ManyToManyField(Tag)

@@ -4449,7 +4449,7 @@ p {
 .header-14 .cart-dropdown.show .dropdown-toggle,
 .header-14 .compare-dropdown:hover .dropdown-toggle,
 .header-14 .compare-dropdown.show .dropdown-toggle {
-  color: #fcb941;
+  color: #006400;;
 }
 .header-14 .mobile-menu-toggler {
   margin-left: 0;
@@ -9631,6 +9631,7 @@ button:focus {
   left: 30px;
   margin: 0;
 }
+
 .quickView-content .owl-theme.owl-nav-inside .owl-nav .owl-next {
   right: 30px;
   margin: 0;

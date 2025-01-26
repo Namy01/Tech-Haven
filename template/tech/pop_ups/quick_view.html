@@ -1,0 +1,35 @@
+<div class="container quickView-container">
+    <div class="quickView-content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="product-gallery product-gallery-vertical">
+                    <div class="row">
+                        <figure class="product-main-image">
+                            <img id="product-zoom" src="{{ product.main_image.url }}"
+                                data-zoom-image="{{ product.main_image.url }}" alt="product image">
+                            <a href="#" id="btn-product-gallery" class="btn-product-gallery">
+                                <i class="icon-arrows"></i>
+                            </a>
+                        </figure><!-- End .product-main-image -->
+
+                        <div class="product-image-gallery">
+                            <a class="product-gallery-item active" href="#"
+                                data-image="{{ product.main_image.url }}"
+                                data-zoom-image="{{ product.main_image.url }}">
+                                <img src="{{ product.main_image.url }}" alt="product side"
+                                    style="width: 100px; height: 100px; object-fit: cover; border: 1px solid #ddd; border-radius: 4px; margin: 5px;">
+                            </a>
+                            {% for proimage in product.gallery_images.all %}
+                            <a class="product-gallery-item" href="#" data-image="{{ proimage.image.url }}"
+                                data-zoom-image="{{ proimage.image.url }}">
+                                <img src="{{ proimage.image.url }}" alt="product side"
+                                    style="width: 100px; height: 100px; object-fit: cover; border: 1px solid #ddd; border-radius: 4px; margin: 5px;">
+                            </a>
+                            {% endfor %}
+                        </div><!-- End .product-image-gallery -->
+                    </div><!-- End .row -->
+                </div><!-- End .product-gallery -->
+            </div><!-- End .col-md-6 -->
+        </div>
+    </div>
+</div>

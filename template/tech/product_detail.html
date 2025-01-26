@@ -42,14 +42,15 @@
                         <h1 class="product-title">{{ product.name }}</h1><!-- End .product-title -->
 
                         <div class="ratings-container">
-                            <p>
-                                
-                                
-                                    <span style="color: gold;">
-                                        {{ total_stars|average_star:review_count }}
-                                    </span>
-                            </p>
-                            <a class="ratings-text" href="#product-review-link" id="review-link"><p>( Reviews: {{ review_count }})</p></a>
+                            <h5>
+                                <span style="color: gold;">
+                                    {{ product.review|stars }}
+                                </span>
+                            </h5>
+                            <h6>
+                                <span class="ratings-text"> (review {{ product.reviews.count }})
+                                </span>
+                            </h6>
                         </div><!-- End .rating-container -->
 
                         <div class="product-price">
@@ -149,7 +150,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" id="product-review-link" data-toggle="tab" href="#product-review-tab" role="tab"
-                        aria-controls="product-review-tab" aria-selected="false">Reviews (2)</a>
+                        aria-controls="product-review-tab" aria-selected="false">Reviews ({{ reviews|length }})</a>
                 </li>
             </ul>
             <div class="tab-content">
@@ -165,23 +166,7 @@
                 <div class="tab-pane fade" id="product-info-tab" role="tabpanel" aria-labelledby="product-info-link">
                     <div class="product-desc-content">
                         <h3>Information</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis
-                            eros. Nullam malesuada erat ut turpis. Suspendisse urna viverra non, semper suscipit,
-                            posuere a, pede. Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris
-                            sit amet orci. </p>
-
-                        <h3>Fabric & care</h3>
-                        <ul>
-                            <li>Faux suede fabric</li>
-                            <li>Gold tone metal hoop handles.</li>
-                            <li>RI branding</li>
-                            <li>Snake print trim interior </li>
-                            <li>Adjustable cross body strap</li>
-                            <li> Height: 31cm; Width: 32cm; Depth: 12cm; Handle Drop: 61cm</li>
-                        </ul>
-
-                        <h3>Size</h3>
-                        <p>one size</p>
+                        {{ product.additional_info|safe }}
                     </div><!-- End .product-desc-content -->
                 </div><!-- .End .tab-pane -->
                 <div class="tab-pane fade" id="product-shipping-tab" role="tabpanel"
@@ -211,11 +196,11 @@
                             </div>
                             {% endif %}
                             <div class="bg-white border border-top-0 p-4">
-                                <form class="form-contact comment_form" 
-                                    id="ReviewForm" method="post" action="{% url 'add_review' product.id %}" enctype="multipart/form-data">
+                                <form class="form-contact comment_form" id="ReviewForm" method="post"
+                                    action="{% url 'add_review' product.id %}" enctype="multipart/form-data">
                                     {% csrf_token %}
                                     <input type="hidden" name="product" value="{{ product.id }}">
-                    
+
                                     <div class="form-row">
                                         <div class="col-sm-6">
                                             <div class="form-group">
@@ -223,7 +208,7 @@
                                                 <input type="text" class="form-control" id="name" name="name"
                                                     value="{{ form.name.value }}">
                                                 {% for error in form.name.errors %}
-                                                    <div class="text-danger">{{ error }}</div>
+                                                <div class="text-danger">{{ error }}</div>
                                                 {% endfor %}
                                             </div>
                                         </div>
@@ -233,7 +218,7 @@
                                                 <input type="email" class="form-control" id="email" name="email"
                                                     value="{{ form.email.value }}">
                                                 {% for error in form.email.errors %}
-                                                    <div class="text-danger">{{ error }}</div>
+                                                <div class="text-danger">{{ error }}</div>
                                                 {% endfor %}
                                             </div>
                                         </div>
@@ -242,40 +227,55 @@
                                                 <label for="profile">Profile</label>
                                                 <input type="file" class="form-control" id="profile" name="profile">
                                                 {% for error in form.profile.errors %}
-                                                    <div class="text-danger">{{ error }}</div>
+                                                <div class="text-danger">{{ error }}</div>
                                                 {% endfor %}
                                             </div>
                                         </div>
                                     </div>
-                    
+
                                     <div class="form-group">
                                         <label for="review">Review *</label>
-                                        <input type="text" class="form-control" id="review" name="review" value="{{ form.review.value }}">
+                                        <input type="text" class="form-control" id="review" name="review"
+                                            value="{{ form.review.value }}">
                                         {% for error in form.review.errors %}
-                                            <div class="text-danger">{{ error }}</div>
+                                        <div class="text-danger">{{ error }}</div>
                                         {% endfor %}
                                     </div>
-                    
+
                                     <div class="form-group">
                                         <label for="description">Description *</label>
                                         <textarea id="description" name="description" cols="30" rows="5"
                                             class="form-control">{{ form.description.value }}</textarea>
                                         {% for error in form.description.errors %}
-                                            <div class="text-danger">{{ error }}</div>
+                                        <div class="text-danger">{{ error }}</div>
                                         {% endfor %}
                                     </div>
-                    
+
                                     <div class="col-sm-6">
                                         <div class="form-group">
-                                            <label for="stars">Star Rating *</label>
-                                            <input type="number" class="form-control" id="stars" name="stars" 
-                                                   value="{{ form.stars.value }}" min="1" max="5">
+                                            <label for="stars">Star Rating <span style="color: red;">*</span></label>
+                                            <div id="stars" style="display: flex; flex-direction: row; gap: 5px;">
+                                                <input type="radio" id="star1" name="stars" value="1" required style="display: none;">
+                                                <label for="star1" title="1 star" style="font-size: 2em; color: lightgray; cursor: pointer;">★</label>
+                                    
+                                                <input type="radio" id="star2" name="stars" value="2" style="display: none;">
+                                                <label for="star2" title="2 stars" style="font-size: 2em; color: lightgray; cursor: pointer;">★</label>
+                                    
+                                                <input type="radio" id="star3" name="stars" value="3" style="display: none;">
+                                                <label for="star3" title="3 stars" style="font-size: 2em; color: lightgray; cursor: pointer;">★</label>
+                                    
+                                                <input type="radio" id="star4" name="stars" value="4" style="display: none;">
+                                                <label for="star4" title="4 stars" style="font-size: 2em; color: lightgray; cursor: pointer;">★</label>
+                                    
+                                                <input type="radio" id="star5" name="stars" value="5" style="display: none;">
+                                                <label for="star5" title="5 stars" style="font-size: 2em; color: lightgray; cursor: pointer;">★</label>
+                                            </div>
+                                            <!-- Error display -->
                                             {% for error in form.stars.errors %}
-                                                <div class="text-danger">{{ error }}</div>
+                                            <div style="color: red; margin-top: 5px;">{{ error }}</div>
                                             {% endfor %}
                                         </div>
                                     </div>
-                    
                                     <div class="form-group mb-0">
                                         <input type="submit" value="Leave a Review"
                                             class="btn btn-primary font-weight-semi-bold py-2 px-3">
@@ -284,51 +284,55 @@
                             </div>
                         </div>
                     </div>
-                    
+
 
                     <div class="reviews">
                         <h3>{{ reviews|length }} Reviews </h3>
                         {% for review in reviews %}
                         <div class="review">
-                            <div class="row no-gutters">
-                                <div class="col-auto">
-                                    <img style="border-radius: 50%; width: 50px; height: 50px; object-fit: cover;" src="{{ review.profile.url }}" alt="">
-                                    <h4><a href="#">{{ review.name }}.</a></h4>
-                                    <div class="ratings-container">
+                            <div class="row no-gutters align-items-start">
+                                <!-- Profile Picture and Name -->
+                                <div class="col-auto ">
+
+                                    <img 
+                                        style="border-radius: 50%; width: 50px; height: 50px; object-fit: cover;" 
+                                        src="{{ review.profile.url }}" 
+                                        alt="Reviewer Profile Picture"
+                                    >
+                                    <h4><a href="">{{ review.name }}</a></h4>
+                                    <!-- Ratings -->
+                                    <div class="ratings-container mt-2">
                                         <div class="stars">
-                                            <span style="color: gold;">
+                                            <span style="color: gold; font-size: 1.2em;">
                                                 {{ review.stars|stars }}
                                             </span>
                                         </div>
-                                       
-                                    
-                                </div><!-- End .col -->
-                                <div class="col">
-                                    <h4>{{ review.review }}</h4>
-
+                                    </div>
+                                </div>
+                    
+                                <!-- Review Content -->
+                                <div class="col pl-3">
+                                    <h4 class="mb-2">{{ review.review }}</h4>
                                     <div class="review-content">
-                                        <p>{{ review.dedescription }}</p>
-                                    </div><!-- End .review-content -->
-
-                                    <div class="review-action">
-                                        <span class="review-date">{{ review.created_at }}</span> <br>
-                                        {{ review.email }}
-                                    </div><!-- End .review-action -->
-                                </div><!-- End .col-auto -->
-                            </div><!-- End .row -->
-                        </div><!-- End .review -->
+                                        <p>{{ review.description }}</p>
+                                    </div>
+                                    <!-- Review Metadata -->
+                                    <div class="review-action mt-2">
+                                        <span class="review-date text-muted">{{ review.created_at }}</span> <br>
+                                        <span class="text-muted">{{ review.email }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         {% endfor %}
+                    </div><!-- .End .tab-pane -->
+                </div><!-- End .tab-content -->
+            </div><!-- End .product-details-tab -->
+<br>
+            <h2 class="title text-center mb-4">You May Also Like</h2><!-- End .title text-center -->
 
-
-                    </div><!-- End .reviews -->
-                </div><!-- .End .tab-pane -->
-            </div><!-- End .tab-content -->
-        </div><!-- End .product-details-tab -->
-
-        <h2 class="title text-center mb-4">You May Also Like</h2><!-- End .title text-center -->
-
-        <div class="owl-carousel owl-simple carousel-equal-height carousel-with-shadow" data-toggle="owl"
-            data-owl-options='{
+            <div class="owl-carousel owl-simple carousel-equal-height carousel-with-shadow" data-toggle="owl"
+                data-owl-options='{
                 "nav": false, 
                 "dots": true,
                 "margin": 20,
@@ -353,57 +357,74 @@
                     }
                 }
             }'>
-            {% for product in related_product%}
-            <div class="product product-7 text-center">
-                <figure class="product-media">
-                    <span class="product-label label-new">New</span>
-                    <a href="product.html">
-                        <img src="{{ product.main_image.url }}" alt="Product image" class="product-image">
-                    </a>
-
-                    <div class="product-action-vertical">
-                        <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to
-                                wishlist</span></a>
-                        <a href="popup/quickView.html" class="btn-product-icon btn-quickview"
-                            title="Quick view"><span>Quick view</span></a>
-                        <a href="#" class="btn-product-icon btn-compare" title="Compare"><span>Compare</span></a>
-                    </div><!-- End .product-action-vertical -->
-
-                    <div class="product-action">
-                        <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                    </div><!-- End .product-action -->
-                </figure><!-- End .product-media -->
-
-                <div class="product-body">
-                    <div class="product-cat">
-                        <a href="#">{{ product.category.name }}</a>
-                    </div><!-- End .product-cat -->
-                    <h3 class="product-title"><a href="product.html">{{ product.name }}</a></h3>
-                    <!-- End .product-title -->
-                    <div class="product-price">
-                        $60.00
-                    </div><!-- End .product-price -->
-                    <div class="ratings-container">
-                        <div class="ratings">
-                            <div class="ratings-val" style="width: 20%;"></div><!-- End .ratings-val -->
-                        </div><!-- End .ratings -->
-                        <span class="ratings-text">{{ product.review.set_count }}</span>
-                    </div><!-- End .rating-container -->
-
-                    <div class="product-nav product-nav-thumbs">
-                        {% for proimage in product.gallery_images.all %}
-                        <a href="#" class="active">
-                            <img src="{{ proimage.image.url }}" alt="product desc">
-                        </a>
+                {% for product in related_product%}
+                <div class="product product-7 text-center">
+                    <figure class="product-media">
+                        {% for tag in product.tags.all %}
+                        {% if tag|stringformat:"s" == "Sale" %}
+                        <span class="product-label label-circle label-sale">{{ tag }}</span>
+                        {% elif tag|stringformat:"s" == "New" %}
+                        <span class="product-label label-circle label-new">{{ tag }}</span>
+                        {% elif tag|stringformat:"s" == "Top" %}
+                        <span class="product-label label-circle label-top">{{ tag }}</span>
+                        {% else %}
+                        <span style="background-color: rgb(69, 69, 145); color: azure;"
+                            class="product-label label-circle">{{ tag }}</span>
+                        {% endif %}
                         {% endfor %}
-                    </div><!-- End .product-nav -->
-                </div><!-- End .product-body -->
-            </div><!-- End .product -->
+                        <a href="{% url 'product-detail' product.id %}">
+                            <img src="{{ product.main_image.url }}" alt="Product image" class="product-image">
+                        </a>
 
-            {% endfor %}
+                        <div class="product-action-vertical">
+                            <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to
+                                    wishlist</span></a>
+                            <a href="{% url 'quick-view' product.id %}" class="btn-product-icon btn-quickview"
+                                title="Quick view"><span>Quick view</span></a>
+                                
+                            <a href="#" class="btn-product-icon btn-compare" title="Compare"><span>Compare</span></a>
+                        </div><!-- End .product-action-vertical -->
 
-            
-        </div><!-- End .owl-carousel -->
-    </div><!-- End .container -->
-</div><!-- End .page-content -->
-{% endblock content %}
+                        <div class="product-action">
+                            <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
+                        </div><!-- End .product-action -->
+                    </figure><!-- End .product-media -->
+
+                    <div class="product-body">
+                        <div class="product-cat">
+                            <a href="#">{{ product.category.name }}</a>
+                        </div><!-- End .product-cat -->
+                        <h3 class="product-title"><a href="product.html">{{ product.name }}</a></h3>
+                        <!-- End .product-title -->
+                        <div class="product-price">
+                            Rs {{ product.price }}
+                        </div><!-- End .product-price -->
+                        <div class="ratings-container">
+                            <h5>
+                                <span style="color: gold;">
+                                    {{ product.review|stars }}
+                                </span>
+                            </h5>
+                            <h6>
+                                <span class="ratings-text"> (review {{ product.reviews.count }})
+                                </span>
+                            </h6>
+                        </div><!-- End .rating-container -->
+
+                        <div class="product-nav product-nav-thumbs">
+                            {% for proimage in product.gallery_images.all %}
+                            <a href="#" class="active">
+                                <img src="{{ proimage.image.url }}" alt="product desc">
+                            </a>
+                            {% endfor %}
+                        </div><!-- End .product-nav -->
+                    </div><!-- End .product-body -->
+                </div><!-- End .product -->
+
+                {% endfor %}
+
+
+            </div><!-- End .owl-carousel -->
+        </div><!-- End .container -->
+    </div><!-- End .page-content -->
+    {% endblock content %}

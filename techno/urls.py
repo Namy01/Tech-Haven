@@ -9,5 +9,6 @@ urlpatterns = [
     path("Product-by-tag/<int:tag_id>/", views.Productbytag.as_view(), name= "Product-by-tag"),
     path("product-detail/<int:pk>/", views.ProductDetail.as_view(), name= "product-detail"),
     path('product/<int:pk>/review/', views.ReviewView.as_view(), name='add_review'),
+    path('quick-view/<int:pk>/', views.Quickview.as_view(), name='quick-view'),
 
 ]

@@ -1,0 +1,19 @@
+{% extends "tech/base.html" %}
+{% block content %}
+<main class="main">
+    {% include "tech/cart/top.html" %}
+    
+
+    <div class="page-content">
+        <div class="cart">
+            <div class="container">
+                <div class="row">
+                    {% include "tech/cart/cart_right.html" %}
+                    {% include "tech/cart/cart_left.html" %}
+                </div><!-- End .row -->
+            </div><!-- End .container -->
+        </div><!-- End .cart -->
+    </div><!-- End .page-content -->
+</main><!-- End .main -->
+
+{% endblock content %}

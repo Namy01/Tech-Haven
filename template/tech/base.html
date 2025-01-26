@@ -59,65 +59,85 @@
     
     
     <script>
-        $(document).ready(function () {
-            // When a gallery image is clicked
-            $('.product-gallery-item').on('click', function (e) {
-                e.preventDefault();
-                
-                // Remove 'active' class from all gallery items
-                $('.product-gallery-item').removeClass('active');
-                
-                // Add 'active' class to the clicked item
-                $(this).addClass('active');
-                
-                // Change the main image to the clicked image
-                var newImage = $(this).data('image');
-                var newZoomImage = $(this).data('zoom-image');
-                $('#product-zoom').attr('src', newImage);
-                $('#product-zoom').attr('data-zoom-image', newZoomImage);
-                
-                // Ensure correct border positioning
-                fixActiveBorder(this);
-                
-                // Reinitialize zoom lens size
-                setZoomLensSize();
-            });
-    
-            // Function to fix active border alignment
-            function fixActiveBorder(element) {
-                var $el = $(element);
-                var width = $el.outerWidth();
-                var height = $el.outerHeight();
-                var offset = $el.position();
-                
-                $el.css({
-                    'width': width + 'px',
-                    'height': height + 'px',
-                    'box-sizing': 'border-box'
-                });
-            }
-    
-            // Function to initialize zoom lens size based on image size
-            function setZoomLensSize() {
-                var imageWidth = $('#product-zoom').width();
-                var imageHeight = $('#product-zoom').height();
-                $('#product-zoom').ezPlus({
-                    zoomType: 'window',
-                    lensShape: 'square',
-                    lensSize: imageWidth,
-                    borderSize: 1,
-                    borderColour: '#888',
-                    responsive: true,
-                });
-            }
-    
-            // Initialize the zoom lens size when the page is loaded
+       $(document).ready(function () {
+    $('.product-gallery-item').on('click', function (e) {
+        e.preventDefault();
+       
+        $('.product-gallery-item').removeClass('active');
+        
+        
+        $(this).addClass('active');
+        
+        
+        var newImage = $(this).data('image');
+        var newZoomImage = $(this).data('zoom-image');
+
+        $('#product-zoom').attr('src', newImage);
+        $('#product-zoom').attr('data-zoom-image', newZoomImage);
+
+        
+        $('#product-zoom').on('load', function () {
             setZoomLensSize();
         });
+    });
+
+    function setZoomLensSize() {
+        $('#product-zoom').ezPlus({
+            zoomType: 'window',
+            lensShape: 'square',
+            lensSize: 200, 
+            borderSize: 1,
+            borderColour: '#888',
+            responsive: true,
+        });
+    }
+
+  
+    setZoomLensSize();
+});
+
     </script>
     
+    <script>
         
-        
+        document.querySelectorAll('#stars label').forEach(label => {
+            label.addEventListener('mouseover', function () {
+                this.style.color = 'gold';
+                let prev = this.previousElementSibling;
+                while (prev) {
+                    if (prev.tagName === 'LABEL') prev.style.color = 'gold';
+                    prev = prev.previousElementSibling;
+                }
+            });
+    
+            label.addEventListener('mouseout', function () {
+                document.querySelectorAll('#stars label').forEach(el => {
+                    el.style.color = 'lightgray';
+                });
+                const checked = document.querySelector('#stars input:checked ~ label');
+                if (checked) {
+                    checked.style.color = 'gold';
+                    let prev = checked.previousElementSibling;
+                    while (prev) {
+                        if (prev.tagName === 'LABEL') prev.style.color = 'gold';
+                        prev = prev.previousElementSibling;
+                    }
+                }
+            });
+    
+            label.addEventListener('click', function () {
+                document.querySelectorAll('#stars label').forEach(el => el.style.color = 'lightgray');
+                this.style.color = 'gold';
+                let prev = this.previousElementSibling;
+                while (prev) {
+                    if (prev.tagName === 'LABEL') prev.style.color = 'gold';
+                    prev = prev.previousElementSibling;
+                }
+            });
+        });
+    </script>
+     
+     
 </body>
 
 
