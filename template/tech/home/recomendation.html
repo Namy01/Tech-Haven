@@ -47,7 +47,7 @@
                         <form action="{% url 'cart-add' product_id=recomende.id %}" method="post" class="product-action">
                             {% csrf_token %}
                             <input type="hidden" name="qty" value="1" required>
-                            <button type="submit" class="btn-product btn-cart no-style" title="Add to cart"><span>add to cart</span></button>
+                            <button type="submit" class="btn-product btn-cart no-style" title="Add to cart" {% if recomende.stock <= 0 %} disabled {% endif %}><span>add to cart</span></button>
                             <a href="{% url 'quick-view' recomende.id %}" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
                         </form>
                     </figure><!-- End .product-media -->
@@ -61,6 +61,12 @@
                             <span class="new-price">Rs {{ recomende.price }}</span>
                          
                         </div><!-- End .product-price -->
+                        <div class="stock-col"><span class="in-stock">
+                            {% if recomende.stock > 0 %}
+                            <span>In Stock</span>
+                            {% else %}
+                            <span>Out of Stock</span>
+                            {% endif %}</span></div>
                         <div class="ratings-container">
                             <h5>
                                 <span style="color: gold;">

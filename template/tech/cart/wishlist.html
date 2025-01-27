@@ -46,21 +46,38 @@
                             </div><!-- End .product -->
                         </td>
                         <td class="price-col">{{ wishlist_item.product.price }}</td>
-                        <td class="stock-col"><span class="in-stock">In stock</span></td>
-                        <td class="action-col">
-                            <div class="dropdown">
-                            <button class="btn btn-block btn-outline-primary-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="icon-list-alt"></i>Select Options
-                            </button>
-
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#">First option</a>
-                                <a class="dropdown-item" href="#">Another option</a>
-                                <a class="dropdown-item" href="#">The best option</a>
-                              </div>
-                            </div>
+                        <td class="stock-col"><span class="in-stock">{% if wishlist_item.product.stock > 0 %}
+                            <span>In Stock</span>
+                        {% else %}
+                            <span>Out of Stock</span>
+                        {% endif %}</span></td>
+                        
+                           
+                        <td>
+                            {% if wishlist_item.product.stock > 0 %}
+                            <form action="{% url 'cart-add' product_id=wishlist_item.product.id %}" method="post" class="action-col">
+                                {% csrf_token %}
+                                <input type="hidden" name="qty" value="1" required>
+                                <button type="submit" class="btn btn-block btn-outline-primary-2" title="Add to cart"><span>add to cart</span></button>
+                                
+                            </form>
+                            {% else %}
+                            <a href="/"><button  class="btn btn-info" title="See more"><span>See more</span></button></a> 
+                            {% endif %}
                         </td>
-                        <td class="remove-col"><button class="btn-remove"><i class="icon-close"></i></button></td>
+                        <td>
+
+                            <a href="{% url 'quick-view' wishlist_item.product.id %}" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
+                        </td>
+                        
+                        <td class="remove-col">
+                            <form action="{% url 'wishlist-add-remove' wishlist_item.product.id %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="btn-remove">
+                                    <i class="icon-close"></i>
+                                </button>
+                            </form>
+                        </td>
                     </tr>
                     {% endfor %}
                    

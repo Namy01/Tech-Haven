@@ -80,7 +80,7 @@
                         <form action="{% url 'cart-add' product_id=product.id %}" method="post" class="product-action">
                             {% csrf_token %}
                             <input type="hidden" name="qty" value="1" required>
-                            <button type="submit" class="btn-product btn-cart no-style" title="Add to cart"><span>add to cart</span></button>
+                            <button type="submit" class="btn-product btn-cart no-style" title="Add to cart" {% if product.stock <= 0 %} disabled {% endif %}><span>add to cart</span></button>
                             <a href="{% url 'quick-view' product.id %}" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
                         </form>
                         
@@ -92,6 +92,12 @@
                         </div><!-- End .product-cat -->
                         <h3 class="product-title"><a href="">{{ product.name }}</a></h3><!-- End .product-title -->
                         <div class="product-price">{{ product.price }}</div><!-- End .product-price -->
+                        <div class="stock-col"><span class="in-stock">
+                            {% if product.stock > 0 %}
+                            <span>In Stock</span>
+                            {% else %}
+                            <span>Out of Stock</span>
+                            {% endif %}</span></div>
                         <div class="ratings-container">
                             <h5>
                                 <span style="color: gold;">
@@ -157,7 +163,7 @@
                         <form action="{% url 'cart-add' product_id=product.id %}" method="post" class="product-action">
                             {% csrf_token %}
                             <input type="hidden" name="qty" value="1" required>
-                            <button type="submit" class="btn-product btn-cart no-style" title="Add to cart"><span>add to cart</span></button>
+                            <button type="submit" class="btn-product btn-cart no-style" title="Add to cart" {% if product.stock <= 0 %} disabled {% endif %}><span>add to cart</span></button>
                             <a href="{% url 'quick-view' product.id %}" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
                         </form>
                     </figure><!-- End .product-media -->
@@ -167,7 +173,14 @@
                             <a href="#">{{ product.category.name }}</a>
                         </div><!-- End .product-cat -->
                         <h3 class="product-title"><a href="">{{ product.name }} </a></h3><!-- End .product-title -->
-                        <div class="product-price">{{ product.price }}</div><!-- End .product-price -->
+                        <div class="product-price">Rs {{ product.price }}</div><!-- End .product-price -->
+                        <div class="stock-col"><span class="in-stock">
+                            {% if product.stock > 0 %}
+                            <span>In Stock</span>
+                            {% else %}
+                            <span>Out of Stock</span>
+                            {% endif %}</span></div>
+
                         <div class="ratings-container">
                             <h5>
                                 <span style="color: gold;">
@@ -179,7 +192,7 @@
                                 </span>
                             </h6>
                         </div><!-- End .rating-container -->
-
+                        
                         <div class="product-nav product-nav-dots">
                             <a href="#" style="background: #edd2c8;"><span class="sr-only">Color name</span></a>
                             <a href="#" style="background: #eaeaec;"><span class="sr-only">Color name</span></a>

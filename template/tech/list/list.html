@@ -58,7 +58,7 @@
                                     <form action="{% url 'cart-add' product_id=product.id %}" method="post" class="product-action">
                                         {% csrf_token %}
                                         <input type="hidden" name="qty" value="1" required>
-                                        <button type="submit" class="btn-product btn-cart no-style"><span>add to cart</span></button>
+                                        <button type="submit" class="btn-product btn-cart no-style" {% if product.stock <= 0 %} disabled {% endif %}><span>add to cart</span></button>
                                     </form>
                                
                                 
@@ -73,6 +73,12 @@
                                 <div class="product-price">
                                    Rs {{ product.price }}
                                 </div><!-- End .product-price -->
+                                <div class="stock-col"><span class="in-stock">
+                                    {% if product.stock > 0 %}
+                                    <span>In Stock</span>
+                                    {% else %}
+                                    <span>Out of Stock</span>
+                                    {% endif %}</span></div>
                                 <div class="ratings-container">
                                    
                                         <div class="stars">

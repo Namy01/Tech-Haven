@@ -1,6 +1,6 @@
 {% load static %}
 <div class="page-header text-center">
-    <div class="container" >
+    <div class="container" style="background-image: url('{% static 'assets/video/side1.png' %}'); background-size: cover; background-position: center; height: 300px;" >
         <div class="row" >
             <div class="col-3">
                 <video width="300" autoplay playsinline muted loop>
@@ -8,11 +8,7 @@
                     Your browser does not support the video tag.
                 </video>
             </div>
-            <div class="col-9" >
-                <img src="{% static 'assets/video/side1.png' %}" alt="">
-
-                </video>
-            </div>
+           
         </div>
     </div><!-- End .container -->
 </div><!-- End .page-header -->
