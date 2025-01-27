@@ -97,7 +97,7 @@
                                 <div class="form-group">
                                     <label for="qty">Qty:</label>
                                     <div class="product-details-quantity">
-                                        <input type="number" id="qty" name="qty" class="form-control" value="1" min="1" max="10" step="1" data-decimals="0" required>
+                                        <input type="number" id="quantity" name="quantity" class="form-control"  value="1"   min="1" max="10" step="1" data-decimals="0" placeholder="0" required>
                                     </div>
                                 </div>
                                 <div class="product-details-action">
@@ -139,7 +139,11 @@
         <div class="product-details-tab">
             <ul class="nav nav-pills justify-content-center" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" id="product-desc-link" data-toggle="tab" href="#product-desc-tab"
+                    <a class="nav-link active" id="product-review-link" data-toggle="tab" href="#product-review-tab" role="tab"
+                        aria-controls="product-review-tab" aria-selected="false">Reviews ({{ reviews|length }})</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " id="product-desc-link" data-toggle="tab" href="#product-desc-tab"
                         role="tab" aria-controls="product-desc-tab" aria-selected="true">Description</a>
                 </li>
                 <li class="nav-item">
@@ -156,7 +160,155 @@
                 </li>
             </ul>
             <div class="tab-content">
-                <div class="tab-pane fade show active" id="product-desc-tab" role="tabpanel"
+
+                <div class="tab-pane fade show active" id="product-review-tab" role="tabpanel"
+                aria-labelledby="product-review-link">
+                <div class="reviews">
+                    <h2>Write a Review</h2>
+                    <div class="mb-3">
+                        <div class="section-title mb-0">
+                           
+                        </div>
+                        {% if messages %}
+                        <div class="alert alert-info">
+                            {% for message in messages %}
+                            <p>{{ message }}</p>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                        <div class="bg-white border border-top-0 p-4">
+                            <form class="form-contact comment_form" id="ReviewForm" method="post"
+                                action="{% url 'add_review' product.id %}" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <input type="hidden" name="product" value="{{ product.id }}">
+
+                                <div class="form-row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label for="name">Name *</label>
+                                            <input type="text" class="form-control" id="name" name="name"
+                                                value="{{ form.name.value }}">
+                                            {% for error in form.name.errors %}
+                                            <div class="text-danger">{{ error }}</div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label for="email">Email *</label>
+                                            <input type="email" class="form-control" id="email" name="email"
+                                                value="{{ form.email.value }}">
+                                            {% for error in form.email.errors %}
+                                            <div class="text-danger">{{ error }}</div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label for="profile">Profile</label>
+                                            <input type="file" class="form-control" id="profile" name="profile">
+                                            {% for error in form.profile.errors %}
+                                            <div class="text-danger">{{ error }}</div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="review">Review *</label>
+                                    <input type="text" class="form-control" id="review" name="review"
+                                        value="{{ form.review.value }}">
+                                    {% for error in form.review.errors %}
+                                    <div class="text-danger">{{ error }}</div>
+                                    {% endfor %}
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="description">Description *</label>
+                                    <textarea id="description" name="description" cols="30" rows="5"
+                                        class="form-control">{{ form.description.value }}</textarea>
+                                    {% for error in form.description.errors %}
+                                    <div class="text-danger">{{ error }}</div>
+                                    {% endfor %}
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="stars">Star Rating <span style="color: red;">*</span></label>
+                                        <div id="stars" style="display: flex; flex-direction: row; gap: 5px;">
+                                            <input type="radio" id="star1" name="stars" value="1" required style="display: none;">
+                                            <label for="star1" title="1 star" style="font-size: 2em; color: lightgray; cursor: pointer;">★</label>
+                                
+                                            <input type="radio" id="star2" name="stars" value="2" style="display: none;">
+                                            <label for="star2" title="2 stars" style="font-size: 2em; color: lightgray; cursor: pointer;">★</label>
+                                
+                                            <input type="radio" id="star3" name="stars" value="3" style="display: none;">
+                                            <label for="star3" title="3 stars" style="font-size: 2em; color: lightgray; cursor: pointer;">★</label>
+                                
+                                            <input type="radio" id="star4" name="stars" value="4" style="display: none;">
+                                            <label for="star4" title="4 stars" style="font-size: 2em; color: lightgray; cursor: pointer;">★</label>
+                                
+                                            <input type="radio" id="star5" name="stars" value="5" style="display: none;">
+                                            <label for="star5" title="5 stars" style="font-size: 2em; color: lightgray; cursor: pointer;">★</label>
+                                        </div>
+                                        <!-- Error display -->
+                                        {% for error in form.stars.errors %}
+                                        <div style="color: red; margin-top: 5px;">{{ error }}</div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                <div class="form-group mb-0">
+                                    <input type="submit" value="Leave a Review"
+                                        class="btn btn-primary font-weight-semi-bold py-2 px-3">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="reviews">
+                    <h3>{{ reviews|length }} Reviews </h3>
+                    {% for review in reviews %}
+                    <div class="review">
+                        <div class="row no-gutters align-items-start">
+                            <!-- Profile Picture and Name -->
+                            <div class="col-auto ">
+
+                                <img 
+                                    style="border-radius: 50%; width: 50px; height: 50px; object-fit: cover;" 
+                                    src="{{ review.profile.url }}" 
+                                    alt="Reviewer Profile Picture"
+                                >
+                                <h4><a href="">{{ review.name }}</a></h4>
+                                <!-- Ratings -->
+                                <div class="ratings-container mt-2">
+                                    <div class="stars">
+                                        <span style="color: gold; font-size: 1.2em;">
+                                            {{ review.stars|stars }}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                
+                            <!-- Review Content -->
+                            <div class="col pl-3">
+                                <h4 class="mb-2">{{ review.review }}</h4>
+                                <div class="review-content">
+                                    <p>{{ review.description }}</p>
+                                </div>
+                                <!-- Review Metadata -->
+                                <div class="review-action mt-2">
+                                    <span class="review-date text-muted">{{ review.created_at }}</span> <br>
+                                    <span class="text-muted">{{ review.email }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div><!-- .End .tab-pane -->
+            </div><!-- End .tab-content -->
+                <div class="tab-pane fade " id="product-desc-tab" role="tabpanel"
                     aria-labelledby="product-desc-link">
                     <div class="product-desc-content">
                         <h3>Product Information</h3>
@@ -182,153 +334,7 @@
                                 href="#">Returns information</a></p>
                     </div><!-- End .product-desc-content -->
                 </div><!-- .End .tab-pane -->
-                <div class="tab-pane fade" id="product-review-tab" role="tabpanel"
-                    aria-labelledby="product-review-link">
-                    <div class="reviews">
-                        <h2>Write a Review</h2>
-                        <div class="mb-3">
-                            <div class="section-title mb-0">
-                                <h4 class="m-0 text-uppercase font-weight-bold">Leave a review</h4>
-                            </div>
-                            {% if messages %}
-                            <div class="alert alert-info">
-                                {% for message in messages %}
-                                <p>{{ message }}</p>
-                                {% endfor %}
-                            </div>
-                            {% endif %}
-                            <div class="bg-white border border-top-0 p-4">
-                                <form class="form-contact comment_form" id="ReviewForm" method="post"
-                                    action="{% url 'add_review' product.id %}" enctype="multipart/form-data">
-                                    {% csrf_token %}
-                                    <input type="hidden" name="product" value="{{ product.id }}">
-
-                                    <div class="form-row">
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label for="name">Name *</label>
-                                                <input type="text" class="form-control" id="name" name="name"
-                                                    value="{{ form.name.value }}">
-                                                {% for error in form.name.errors %}
-                                                <div class="text-danger">{{ error }}</div>
-                                                {% endfor %}
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label for="email">Email *</label>
-                                                <input type="email" class="form-control" id="email" name="email"
-                                                    value="{{ form.email.value }}">
-                                                {% for error in form.email.errors %}
-                                                <div class="text-danger">{{ error }}</div>
-                                                {% endfor %}
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label for="profile">Profile</label>
-                                                <input type="file" class="form-control" id="profile" name="profile">
-                                                {% for error in form.profile.errors %}
-                                                <div class="text-danger">{{ error }}</div>
-                                                {% endfor %}
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="review">Review *</label>
-                                        <input type="text" class="form-control" id="review" name="review"
-                                            value="{{ form.review.value }}">
-                                        {% for error in form.review.errors %}
-                                        <div class="text-danger">{{ error }}</div>
-                                        {% endfor %}
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="description">Description *</label>
-                                        <textarea id="description" name="description" cols="30" rows="5"
-                                            class="form-control">{{ form.description.value }}</textarea>
-                                        {% for error in form.description.errors %}
-                                        <div class="text-danger">{{ error }}</div>
-                                        {% endfor %}
-                                    </div>
-
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label for="stars">Star Rating <span style="color: red;">*</span></label>
-                                            <div id="stars" style="display: flex; flex-direction: row; gap: 5px;">
-                                                <input type="radio" id="star1" name="stars" value="1" required style="display: none;">
-                                                <label for="star1" title="1 star" style="font-size: 2em; color: lightgray; cursor: pointer;">★</label>
-                                    
-                                                <input type="radio" id="star2" name="stars" value="2" style="display: none;">
-                                                <label for="star2" title="2 stars" style="font-size: 2em; color: lightgray; cursor: pointer;">★</label>
-                                    
-                                                <input type="radio" id="star3" name="stars" value="3" style="display: none;">
-                                                <label for="star3" title="3 stars" style="font-size: 2em; color: lightgray; cursor: pointer;">★</label>
-                                    
-                                                <input type="radio" id="star4" name="stars" value="4" style="display: none;">
-                                                <label for="star4" title="4 stars" style="font-size: 2em; color: lightgray; cursor: pointer;">★</label>
-                                    
-                                                <input type="radio" id="star5" name="stars" value="5" style="display: none;">
-                                                <label for="star5" title="5 stars" style="font-size: 2em; color: lightgray; cursor: pointer;">★</label>
-                                            </div>
-                                            <!-- Error display -->
-                                            {% for error in form.stars.errors %}
-                                            <div style="color: red; margin-top: 5px;">{{ error }}</div>
-                                            {% endfor %}
-                                        </div>
-                                    </div>
-                                    <div class="form-group mb-0">
-                                        <input type="submit" value="Leave a Review"
-                                            class="btn btn-primary font-weight-semi-bold py-2 px-3">
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="reviews">
-                        <h3>{{ reviews|length }} Reviews </h3>
-                        {% for review in reviews %}
-                        <div class="review">
-                            <div class="row no-gutters align-items-start">
-                                <!-- Profile Picture and Name -->
-                                <div class="col-auto ">
-
-                                    <img 
-                                        style="border-radius: 50%; width: 50px; height: 50px; object-fit: cover;" 
-                                        src="{{ review.profile.url }}" 
-                                        alt="Reviewer Profile Picture"
-                                    >
-                                    <h4><a href="">{{ review.name }}</a></h4>
-                                    <!-- Ratings -->
-                                    <div class="ratings-container mt-2">
-                                        <div class="stars">
-                                            <span style="color: gold; font-size: 1.2em;">
-                                                {{ review.stars|stars }}
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                    
-                                <!-- Review Content -->
-                                <div class="col pl-3">
-                                    <h4 class="mb-2">{{ review.review }}</h4>
-                                    <div class="review-content">
-                                        <p>{{ review.description }}</p>
-                                    </div>
-                                    <!-- Review Metadata -->
-                                    <div class="review-action mt-2">
-                                        <span class="review-date text-muted">{{ review.created_at }}</span> <br>
-                                        <span class="text-muted">{{ review.email }}</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        {% endfor %}
-                    </div><!-- .End .tab-pane -->
-                </div><!-- End .tab-content -->
+              
             </div><!-- End .product-details-tab -->
 <br>
             <h2 class="title text-center mb-4">You May Also Like</h2><!-- End .title text-center -->

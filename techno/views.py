@@ -4,7 +4,7 @@ from django.views import View
 from django.contrib import messages
 from techno.forms import ReviewForm
 from django.urls import reverse_lazy
-from .models import Advertisement, Cart, CartItem, Product, Review, Tag, Category
+from .models import Advertisement, Cart, CartItem, Product, Review, Tag, Category, WishList
 from django.views.generic import ListView, DetailView, TemplateView, CreateView
 from django.db.models import Avg
 
@@ -192,6 +192,35 @@ class CartDetailView(View):
             "selected_shipping": selected_shipping,
         }
         return render(request, "tech/cart/cart.html", context)
+    
+class WishListView(View):
+    def get(self, request):
+        if request.user.is_authenticated:
+            wishlist_items = WishList.objects.filter(user=request.user)
+        else:
+            session_key = request.session.session_key
+            if not session_key:
+                request.session.create()
+            wishlist_items = WishList.objects.filter(session_key=request.session.session_key)
+
+        return render(request, 'tech/cart/wishlist.html', {'wishlist_items': wishlist_items})
+
+    def post(self, request, product_id):
+        product = get_object_or_404(Product, id=product_id)
+
+        if request.user.is_authenticated:
+            wishlist_item, created = WishList.objects.get_or_create(user=request.user, product=product)
+        else:
+            session_key = request.session.session_key
+            if not session_key:
+                request.session.create()
+            wishlist_item, created = WishList.objects.get_or_create(session_key=request.session.session_key, product=product)
+
+        if not created:
+            wishlist_item.delete()
+
+        return redirect('wishlist')
+
     
 
      

@@ -62,9 +62,18 @@
                             <img src="{{ product.main_image.url }}" alt="Product image" class="product-image">
                         </a>
 
-                        <div class="product-action-vertical">
-                            <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
-                        </div><!-- End .product-action -->
+                       
+                        <form action="{% url 'wishlist-add-remove' product.id %}" method="post" class="product-action-vertical">
+                            {% csrf_token %}
+                            <button type="submit" class="btn-product-icon btn-wishlist {% if product.id in is_in_wishlist %}in-wishlist{% endif %}" 
+                                title="{% if product.id in is_in_wishlist %}Remove from wishlist{% else %}Add to wishlist{% endif %}">
+                                <span class="wishlist-icon"></span> 
+                            </button>
+                        </form>
+                        
+                        
+                        
+                        <!-- End .product-action -->
 
                         
 
@@ -137,9 +146,13 @@
                             <img src="{{ product.main_image.url }}" alt="Product image" class="product-image">
                         </a>
 
-                        <div class="product-action-vertical">
-                            <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
-                        </div><!-- End .product-action -->
+                        <form action="{% url 'wishlist-add-remove' product.id %}" method="post" class="product-action-vertical">
+                            {% csrf_token %}
+                            <button type="submit" class="btn-product-icon btn-wishlist {% if product.id in is_in_wishlist %}in-wishlist{% endif %}" 
+                                title="{% if product.id in is_in_wishlist %}Remove from wishlist{% else %}Add to wishlist{% endif %}">
+                                <span class="wishlist-icon"></span> <!-- Optional: Add an icon here -->
+                            </button>
+                        </form>
 
                         <form action="{% url 'cart-add' product_id=product.id %}" method="post" class="product-action">
                             {% csrf_token %}

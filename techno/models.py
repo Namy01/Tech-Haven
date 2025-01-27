@@ -103,7 +103,17 @@ class CartItem(Timestamp):
 
     def get_total_price(self):
         return self.product.price * self.quantity
+    
 
     
 
 
+
+class WishList(Timestamp):
+    user = models.ForeignKey('auth.User', on_delete=models.CASCADE, null=True, blank=True)
+    session_key = models.CharField(max_length=255, blank=True, null=True)  # For guest users
+    is_active = models.BooleanField(default=True)  
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return self.product.name

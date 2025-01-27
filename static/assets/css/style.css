@@ -16405,3 +16405,23 @@ input[type="number"] {
 .btn-product:hover {
   color: #006400;
 }
+
+.btn-wishlist:hover,
+.btn-wishlist:focus {
+  color: #fff;
+  border-color: #39f;
+  background-color: #39f;
+}
+
+.btn-wishlist.in-wishlist {
+  background-color: #39f; 
+  color: white;
+  border-color: #39f;
+}
+
+.btn-wishlist.in-wishlist:hover,
+.btn-wishlist.in-wishlist:focus {
+  background-color: #fff;
+  color: #39f;
+  border-color: #39f;
+}
