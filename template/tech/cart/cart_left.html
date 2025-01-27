@@ -5,9 +5,9 @@
                 <th>Product</th>
                 <th>Price</th>
                 <th>Quantity</th>
-                <th></th>
                 <th>Total</th>
                 <th></th>
+                
             </tr>
         </thead>
 
@@ -21,31 +21,30 @@
                                 <img src="{{ cart_item.product.main_image.url }}" alt="Product image">
                             </a>
                         </figure>
-
                         <h3 class="product-title">
                             <a href="#">{{ cart_item.product.name }}</a>
-                        </h3><!-- End .product-title -->
-                    </div><!-- End .product -->
+                        </h3>
+                    </div>
                 </td>
                 <td class="price-col">Rs {{ cart_item.product.price }}</td>
                 <td class="quantity-col">
-                    <form action="{% url 'update_cart' cart_item_id=cart_item.id %}" method="post">
+                    <form action="{% url 'update_cart' cart_item_id=cart_item.id %}" method="post" id="update-quantity-form-{{ cart_item.id }}">
                         {% csrf_token %}
-                        <input type="number" name="quantity" value="{{ cart_item.quantity }}" min="1" max="10">
-                <td>
-                    <button type="submit" class="btn btn">
-                        <i class="icon-refresh"></i>
-                    </button>
-                </td>
-                </form>
+                        <input style="font-weight: bold;" type="number" name="quantity" value="{{ cart_item.quantity }}" min="1" max="10" 
+                               onchange="document.getElementById('update-quantity-form-{{ cart_item.id }}').submit();">
+                    </form>
                 </td>
                 <td class="total-col">Rs {{ cart_item.get_total_price }}</td>
-                <td class="remove-col"><button class="btn-remove"><i class="icon-close"></i></button></td>
+                <td class="remove-col" >
+                    <form action="{% url 'cart-remove' cart_item_id=cart_item.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn-remove">
+                            <i class="la la-trash"></i>
+                        </button>
+                    </form>
+                </td>
             </tr>
             {% endfor %}
-
         </tbody>
-    </table><!-- End .table table-wishlist -->
-
-   
-</div><!-- End .col-lg-9 -->
+    </table>
+</div>

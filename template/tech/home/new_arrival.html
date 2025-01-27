@@ -66,10 +66,15 @@
                             <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
                         </div><!-- End .product-action -->
 
-                        <div class="product-action">
-                            <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
+                        
+
+                        <form action="{% url 'cart-add' product_id=product.id %}" method="post" class="product-action">
+                            {% csrf_token %}
+                            <input type="hidden" name="qty" value="1" required>
+                            <button type="submit" class="btn-product btn-cart no-style" title="Add to cart"><span>add to cart</span></button>
                             <a href="{% url 'quick-view' product.id %}" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                        </div><!-- End .product-action -->
+                        </form>
+                        
                     </figure><!-- End .product-media -->
 
                     <div class="product-body">
@@ -136,10 +141,12 @@
                             <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
                         </div><!-- End .product-action -->
 
-                        <div class="product-action">
-                            <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                            <a href="" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                        </div><!-- End .product-action -->
+                        <form action="{% url 'cart-add' product_id=product.id %}" method="post" class="product-action">
+                            {% csrf_token %}
+                            <input type="hidden" name="qty" value="1" required>
+                            <button type="submit" class="btn-product btn-cart no-style" title="Add to cart"><span>add to cart</span></button>
+                            <a href="{% url 'quick-view' product.id %}" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
+                        </form>
                     </figure><!-- End .product-media -->
 
                     <div class="product-body">

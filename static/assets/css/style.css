@@ -9827,8 +9827,9 @@ button:focus {
 .container.quickView-container,
 .fullscreen-container .container,
 .container.newsletter-popup-container {
-  width: 1188px;
+  width: 1000px;
   max-width: 100%;
+ 
 }
 .quickView-container,
 .fullscreen-container {
@@ -16344,3 +16345,63 @@ button:focus {
   content: "\f7e3";
 }
 /*# sourceMappingURL=style.css.map */
+
+.table-cart th, .table-cart td {
+  text-align: center;
+  vertical-align: middle;
+}
+
+
+
+
+.quantity-col, .total-col, .remove-col {
+  width: 20%; /* Adjust width of these columns as needed */
+}
+
+.product-col {
+  width: 30%; /* Adjust the product column to accommodate product name and image */
+}
+
+table .product-media img {
+  max-width: 50px; /* Ensures the product image is not too large */
+  height: auto;
+}
+
+input[type="number"] {
+  width: 60px; /* Adjust input size for better alignment */
+  text-align: center;
+}
+
+/* Adjustments for the remove button */
+.table-cart .remove-col {
+  text-align: center; /* Center the delete button */
+}
+
+.btn-remove {
+  padding: 0; /* Remove extra padding for tight alignment */
+  font-size: 20px;    /* Set the font size for the trash icon */
+  color: red;
+  border: none;
+  background-color: transparent; /* Transparent background */
+  cursor: pointer;
+}
+
+.table-cart td {
+  vertical-align: middle; /* Ensure consistent vertical alignment for table cells */
+}
+
+/* Remove default button styling */
+.no-style {
+
+  border: none;
+  background: none;
+  color: inherit;
+  
+  
+}
+
+
+
+.btn-product:hover {
+  color: #006400;
+}

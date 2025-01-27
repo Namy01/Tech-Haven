@@ -54,9 +54,14 @@
                                     <a href="#" class="btn-product-icon btn-compare" title="Compare"><span>Compare</span></a>
                                 </div><!-- End .product-action-vertical -->
 
-                                <div class="product-action">
-                                    <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                </div><!-- End .product-action -->
+                                
+                                    <form action="{% url 'cart-add' product_id=product.id %}" method="post" class="product-action">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="qty" value="1" required>
+                                        <button type="submit" class="btn-product btn-cart no-style"><span>add to cart</span></button>
+                                    </form>
+                               
+                                
                             </figure><!-- End .product-media -->
 
 

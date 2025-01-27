@@ -38,7 +38,12 @@
                                 "nav": true, 
                                 "dots": false,
                                 "margin": 20,
-                                "loop": false,
+                                "loop": true,
+                                "autoplay": true,
+                                "autoplayTimeout": 3000,
+                                "autoplayHoverPause": true,
+                                "smartSpeed": 1000,
+                                                            
                                 "responsive": {
                                     "0": {
                                         "items":2
@@ -78,10 +83,12 @@
                                         <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
                                     </div><!-- End .product-action -->
 
-                                    <div class="product-action">
-                                        <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
-                                        <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                                    </div><!-- End .product-action -->
+                                    <form action="{% url 'cart-add' product_id=product.id %}" method="post" class="product-action">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="qty" value="1" required>
+                                        <button type="submit" class="btn-product btn-cart no-style" title="Add to cart"><span>add to cart</span></button>
+                                        <a href="{% url 'quick-view' product.id %}" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
+                                    </form>
                                 </figure><!-- End .product-media -->
 
                                 <div class="product-body">
@@ -90,7 +97,7 @@
                                     </div><!-- End .product-cat -->
                                     <h3 class="product-title"><a href="product.html">{{ product.name }}</a></h3><!-- End .product-title -->
                                     <div class="product-price">
-                                        {{ product.price }}
+                                        Rs {{ product.price }}
                                     </div><!-- End .product-price -->
                                     <div class="ratings-container">
                                         <h5>
@@ -151,7 +158,7 @@
                             <span style="background-color: rgb(69, 69, 145); color: azure;" class="product-label label-circle">{{ tag }}</span>
                         {% endif %}
                         {% endfor %}
-                                    <a href="">
+                                    <a href="{% url 'product-detail' product.id %}">
                                         <img src="{{ product.main_image.url }}" alt="Product image" class="product-image">
                                     </a>
 
@@ -159,10 +166,12 @@
                                         <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
                                     </div><!-- End .product-action -->
 
-                                    <div class="product-action">
-                                        <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
+                                    <form action="{% url 'cart-add' product_id=product.id %}" method="post" class="product-action">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="qty" value="1" required>
+                                        <button type="submit" class="btn-product btn-cart no-style" title="Add to cart"><span>add to cart</span></button>
                                         <a href="{% url 'quick-view' product.id %}" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                                    </div><!-- End .product-action -->
+                                    </form>
                                 </figure><!-- End .product-media -->
 
                                 <div class="product-body">

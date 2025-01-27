@@ -155,7 +155,7 @@
                          'csrfmiddlewaretoken': '{{ csrf_token }}'
                      },
                      success: function (response) {
-                         $('#total').text('Updated Total: ' + response.total);
+                         $('#total').text("Rs" + response.total);
                      },
                      error: function (xhr, status, error) {
                          alert('An error occurred: ' + xhr.responseText);

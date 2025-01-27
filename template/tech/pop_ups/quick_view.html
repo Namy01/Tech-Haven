@@ -1,35 +1,66 @@
 <div class="container quickView-container">
-    <div class="quickView-content">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="product-gallery product-gallery-vertical">
-                    <div class="row">
-                        <figure class="product-main-image">
+    <div class="quickView-content" >
+        <div class="row" >
+            <div class="col-md-6" style="text-align: center;">
+                    
+                        
                             <img id="product-zoom" src="{{ product.main_image.url }}"
-                                data-zoom-image="{{ product.main_image.url }}" alt="product image">
-                            <a href="#" id="btn-product-gallery" class="btn-product-gallery">
-                                <i class="icon-arrows"></i>
-                            </a>
-                        </figure><!-- End .product-main-image -->
+                                data-zoom-image="{{ product.main_image.url }}" width="100%" alt="product image">
+                          
+                       
+                   
+                </div><!-- End .col md-6 -->
+            <div class="col-md-6">
+                <figure class="product-main-image">
+                    <h1 class="product-title">{{ product.name }}</h1>
+                    <div class="product-price">
+                        Rs {{ product.price }}
+                    </div>
+                    
+                    <p>
+                        {{ product.description|truncatewords:40 }}
+                    </p>
+                    <div class="details-filter-row details-row-size">
 
-                        <div class="product-image-gallery">
-                            <a class="product-gallery-item active" href="#"
-                                data-image="{{ product.main_image.url }}"
-                                data-zoom-image="{{ product.main_image.url }}">
-                                <img src="{{ product.main_image.url }}" alt="product side"
-                                    style="width: 100px; height: 100px; object-fit: cover; border: 1px solid #ddd; border-radius: 4px; margin: 5px;">
-                            </a>
-                            {% for proimage in product.gallery_images.all %}
-                            <a class="product-gallery-item" href="#" data-image="{{ proimage.image.url }}"
-                                data-zoom-image="{{ proimage.image.url }}">
-                                <img src="{{ proimage.image.url }}" alt="product side"
-                                    style="width: 100px; height: 100px; object-fit: cover; border: 1px solid #ddd; border-radius: 4px; margin: 5px;">
-                            </a>
-                            {% endfor %}
-                        </div><!-- End .product-image-gallery -->
-                    </div><!-- End .row -->
-                </div><!-- End .product-gallery -->
-            </div><!-- End .col-md-6 -->
+                        {% for tag in product.tags.all %}
+                        &nbsp;
+                        {% if tag|stringformat:"s" == "Sale" %}
+                        <span
+                            style="background-color: rgb(194, 53, 32); color: azure; padding: 5px 15px; border-radius: 5px; display: inline-block;">
+                            {{ tag.name }}
+                        </span>
+                        {% elif tag|stringformat:"s" == "New" %}
+                        <span
+                            style="background-color: rgb(32, 194, 46); color: azure; padding: 5px 15px; border-radius: 5px; display: inline-block;">
+                            {{ tag.name }}
+                        </span>
+                        {% elif tag|stringformat:"s" == "Top" %}
+                        <span
+                            style="background-color: rgb(186, 32, 194); color: azure; padding: 5px 15px; border-radius: 5px; display: inline-block;">
+                            {{ tag.name }}
+                        </span>
+                        {% else %}
+                        <span
+                            style="background-color: rgb(194, 191, 32); color: azure; padding: 5px 15px; border-radius: 5px; display: inline-block;">
+                            {{ tag.name }}
+                        </span>
+                        {% endif %}
+                        {% endfor %}
+                    </div><!-- End .details-filter-row -->
+
+                    <h5>Other image of the Product</h5>
+                    <div class="product-nav product-nav-thumbs" >
+                        {% for proimage in product.gallery_images.all %}
+                        <a href="#" class="active">
+                            <img src="{{ proimage.image.url }}" alt="product desc" >
+                        </a>
+                        {% endfor %}
+                    </div><!-- End .product-nav -->
+
+                </figure><!-- End .product-main-image -->
+                </div><!-- End .col md-6 -->
+                      
+                       
+            </div><!-- End row -->
         </div>
-    </div>
 </div>

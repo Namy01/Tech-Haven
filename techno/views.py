@@ -133,7 +133,7 @@ class AddToCartView(View):
 
         
         cart_item, _ = CartItem.objects.get_or_create(cart=cart, product=product)
-        cart_item.quantity += int(request.POST.get('quantity', 1))
+        cart_item.quantity += int(request.POST.get('quantity', 0))
         cart_item.save()
 
         return redirect('cart_detail')
