@@ -75,7 +75,7 @@
                                         <span style="background-color: rgb(69, 69, 145); color: azure;" class="product-label label-circle">{{ tag }}</span>
                                     {% endif %}
                                     {% endfor %}
-                                    <a href="product.html">
+                                    <a href="{% url 'product-detail' product.id %}">
                                         <img src="{{ product.main_image.url}}" alt="Product image" class="product-image">
                                     </a>
 
@@ -99,7 +99,7 @@
                                     <div class="product-cat">
                                         <a href="#">{{ product.category.name }}</a>
                                     </div><!-- End .product-cat -->
-                                    <h3 class="product-title"><a href="product.html">{{ product.name }}</a></h3><!-- End .product-title -->
+                                    <h3 class="product-title"><a href="{% url 'product-detail' product.id %}">{{ product.name }}</a></h3><!-- End .product-title -->
                                     <div class="product-price">
                                         Rs {{ product.price }}
                                     </div><!-- End .product-price -->

@@ -58,7 +58,7 @@
                             class="product-label label-circle">{{ tag }}</span>
                         {% endif %}
                         {% endfor %}
-                        <a href="">
+                        <a href="{% url 'product-detail' product.id %}">
                             <img src="{{ product.main_image.url }}" alt="Product image" class="product-image">
                         </a>
 
@@ -88,7 +88,7 @@
 
                     <div class="product-body">
                         <div class="product-cat">
-                            <a href="#">{{ product.category.name }}</a>
+                            <a href="">{{ product.category.name }}</a>
                         </div><!-- End .product-cat -->
                         <h3 class="product-title"><a href="">{{ product.name }}</a></h3><!-- End .product-title -->
                         <div class="product-price">{{ product.price }}</div><!-- End .product-price -->

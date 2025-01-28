@@ -1756,7 +1756,7 @@ blockquote.text-white cite span {
 }
 .menu.sf-arrows .sf-with-ul::after {
   font-family: "molla";
-  content: "\f110";
+  
   position: absolute;
   right: 0;
   top: 50%;
@@ -1769,7 +1769,7 @@ blockquote.text-white cite span {
   padding-right: 4rem;
 }
 .menu.sf-arrows ul .sf-with-ul:after {
-  content: "\f112";
+ 
   right: 3rem;
 }
 .menu .megamenu,
@@ -2185,12 +2185,12 @@ blockquote.text-white cite span {
 .menu-vertical.sf-arrows .sf-with-ul::after {
   display: block;
   font-family: "molla";
-  content: "\f112";
+
   position: absolute;
   right: 1.8rem;
   top: 50%;
   line-height: 1;
-  font-size: 1.2rem;
+  font-size: 2.2rem;
   margin-top: -0.6rem;
 }
 .menu-vertical li > a {
@@ -4449,7 +4449,7 @@ p {
 .header-14 .cart-dropdown.show .dropdown-toggle,
 .header-14 .compare-dropdown:hover .dropdown-toggle,
 .header-14 .compare-dropdown.show .dropdown-toggle {
-  color: #006400;;
+  color: #006400;
 }
 .header-14 .mobile-menu-toggler {
   margin-left: 0;
@@ -9829,7 +9829,6 @@ button:focus {
 .container.newsletter-popup-container {
   width: 1000px;
   max-width: 100%;
- 
 }
 .quickView-container,
 .fullscreen-container {
@@ -16346,15 +16345,15 @@ button:focus {
 }
 /*# sourceMappingURL=style.css.map */
 
-.table-cart th, .table-cart td {
+.table-cart th,
+.table-cart td {
   text-align: center;
   vertical-align: middle;
 }
 
-
-
-
-.quantity-col, .total-col, .remove-col {
+.quantity-col,
+.total-col,
+.remove-col {
   width: 20%; /* Adjust width of these columns as needed */
 }
 
@@ -16379,7 +16378,7 @@ input[type="number"] {
 
 .btn-remove {
   padding: 0; /* Remove extra padding for tight alignment */
-  font-size: 20px;    /* Set the font size for the trash icon */
+  font-size: 20px; /* Set the font size for the trash icon */
   color: red;
   border: none;
   background-color: transparent; /* Transparent background */
@@ -16392,15 +16391,10 @@ input[type="number"] {
 
 /* Remove default button styling */
 .no-style {
-
   border: none;
   background: none;
   color: inherit;
-  
-  
 }
-
-
 
 .btn-product:hover {
   color: #006400;
@@ -16414,7 +16408,7 @@ input[type="number"] {
 }
 
 .btn-wishlist.in-wishlist {
-  background-color: #39f; 
+  background-color: #39f;
   color: white;
   border-color: #39f;
 }
@@ -16425,3 +16419,65 @@ input[type="number"] {
   color: #39f;
   border-color: #39f;
 }
+
+.video-container {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Popup container styles */
+.video-popup {
+  position: fixed;
+  bottom: 80px; /* Adjust distance from the bottom */
+  right: 20px; /* Adjust distance from the right */
+  width: 300px; /* Adjust width of the popup */
+  height: 200px; /* Adjust height of the popup */
+  z-index: 1000;
+  border-radius: 8px;
+  overflow: hidden; /* Ensures the video doesn't exceed the container */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.8); /* Optional background for better contrast */
+}
+
+/* Popup content styles */
+.popup-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 0; /* No padding to avoid issues */
+}
+
+/* Close button styles */
+.close-btn {
+  position: absolute;
+  top: 5px; /* Adjust distance from the top of the container */
+  right: 5px; /* Adjust distance from the right of the container */
+  background: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
+  border: none;
+  font-size: 1.2rem;
+  color: #fff;
+  cursor: pointer;
+  z-index: 10; /* Ensure the button is on top of the video */
+  padding: 5px 10px;
+  border-radius: 4px;
+  transition: background 0.3s ease;
+}
+
+.close-btn:hover {
+  background: rgba(255, 0, 0, 0.8);
+}
+
+/* Video styling */
+.popup-content video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensure the video covers the container */
+}
+
+/* Prevent any overflow of content */
+.video-popup .popup-content {
+  overflow: visible; /* Ensure button doesn't get clipped */
+}
+
+

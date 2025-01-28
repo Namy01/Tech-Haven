@@ -7,7 +7,7 @@
         </div><!-- End .heading-left -->
 
        <div class="heading-right">
-            <a href="#" class="title-link">View All Recommendadion <i class="icon-long-arrow-right"></i></a>
+            <a href="{% url 'list-view' %}" class="title-link">View All Recommendadion <i class="icon-long-arrow-right"></i></a>
        </div><!-- End .heading-right -->
     </div><!-- End .heading -->
 
@@ -38,8 +38,8 @@
 
                         <form action="{% url 'wishlist-add-remove' recomende.id %}" method="post" class="product-action-vertical">
                             {% csrf_token %}
-                            <button type="submit" class="btn-product-icon btn-wishlist {% if product.id in is_in_wishlist %}in-wishlist{% endif %}" 
-                                title="{% if product.id in is_in_wishlist %}Remove from wishlist{% else %}Add to wishlist{% endif %}">
+                            <button type="submit" class="btn-product-icon btn-wishlist {% if recomende.id in is_in_wishlist %}in-wishlist{% endif %}" 
+                                title="{% if recomende.id in is_in_wishlist %}Remove from wishlist{% else %}Add to wishlist{% endif %}">
                                 <span class="wishlist-icon"></span> <!-- Optional: Add an icon here -->
                             </button>
                         </form>
@@ -54,7 +54,7 @@
 
                     <div class="product-body">
                         <div class="product-cat">
-                            <a href="#">{{ recomende.category.name }}</a>
+                            <a href="">{{ recomende.category.name }}</a>
                         </div><!-- End .product-cat -->
                         <h3 class="product-title"><a href="">{{ recomende.name }}</a></h3><!-- End .product-title -->
                         <div class="product-price">

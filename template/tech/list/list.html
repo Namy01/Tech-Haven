@@ -3,8 +3,8 @@
 {% load custom_filters %}
 {% block content %}
 <main class="main">
+    {% include "tech/list/top.html" %}
     
-   {% include "tech/list/top.html" %}
    <br>
     <div class="page-content">
         <div class="container">
@@ -48,12 +48,18 @@
                                     <img src="{{ product.main_image.url }}" alt="Product image" class="product-image">
                                 </a>
 
-                                <div class="product-action-vertical">
-                                    <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
-                                    <a href="popup/quickView.html" class="btn-product-icon btn-quickview" title="Quick view"><span>Quick view</span></a>
-                                    <a href="#" class="btn-product-icon btn-compare" title="Compare"><span>Compare</span></a>
-                                </div><!-- End .product-action-vertical -->
+                                
 
+                                <form action="{% url 'wishlist-add-remove' product.id %}" method="post" class="product-action-vertical">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn-product-icon btn-wishlist {% if product.id in is_in_wishlist %}in-wishlist{% endif %}" 
+                                    title="{% if product.id in is_in_wishlist %}Remove from wishlist{% else %}Add to wishlist{% endif %}">
+                                    <span class="wishlist-icon"></span> 
+                                </button>
+                                        <a href="{% url 'quick-view' product.id %}" class="btn-product-icon btn-quickview" title="Quick view"><span>Quick view</span></a>
+                                        <a href="#" class="btn-product-icon btn-compare" title="Compare"><span>Compare</span></a>
+                                </form>
+                                
                                 
                                     <form action="{% url 'cart-add' product_id=product.id %}" method="post" class="product-action">
                                         {% csrf_token %}
@@ -79,17 +85,17 @@
                                     {% else %}
                                     <span>Out of Stock</span>
                                     {% endif %}</span></div>
-                                <div class="ratings-container">
-                                   
-                                        <div class="stars">
+                                    <div class="ratings-container">
+                                        <h5>
                                             <span style="color: gold;">
                                                 {{ product.review|stars }}
                                             </span>
-                                        
-                                    </div><!-- End .ratings -->
-                                    <span class="ratings-text">{{review_count}}</span>
-                                </div><!-- End .rating-container -->
-
+                                        </h5>
+                                        <h6>
+                                            <span class="ratings-text"> (review {{ product.reviews.count }})
+                                            </span>
+                                        </h6>
+                                    </div><!-- End .rating-container -->
                                 <div class="product-nav product-nav-thumbs">
                                     {% for proimage in product.gallery_images.all %}
                                     <a href="#" class="active">
@@ -359,5 +365,10 @@
             </aside><!-- End .sidebar-filter -->
         </div><!-- End .container -->
     </div><!-- End .page-content -->
+
+    
+    
 </main><!-- End .main -->
+
+
 {% endblock content %}
