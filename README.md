@@ -12,4 +12,4 @@ Database: SQLite
 ### Purpose: 
 The primary goal of this project was to deepen my understanding of Django and the complexities involved in building a fully functional e-commerce platform. This endeavor provided an excellent opportunity to implement and experiment with various features, including product management, user authentication, and dynamic pricing.
 
-Feel free to explore the codebase and provide any feedback or suggestions! 📩
+Feel free to explore the codebase and provide any feedback! 📩
