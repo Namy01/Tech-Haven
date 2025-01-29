@@ -32,6 +32,7 @@
                                         style="width: 100px; height: 100px; object-fit: cover; border: 1px solid #ddd; border-radius: 4px; margin: 5px;">
                                 </a>
                                 {% endfor %}
+                                
                             </div><!-- End .product-image-gallery -->
                         </div><!-- End .row -->
                     </div><!-- End .product-gallery -->
@@ -53,15 +54,13 @@
                             </h6>
                         </div><!-- End .rating-container -->
 
+                        
+
+
                         <div class="product-price">
                             Rs {{ product.price }}
                         </div><!-- End .product-price -->
-                        <div class="stock-col"><span class="in-stock">
-                            {% if product.stock > 0 %}
-                            <span>In Stock</span>
-                            {% else %}
-                            <span>Out of Stock</span>
-                            {% endif %}</span></div>
+                        
 
                         <div class="details-filter-row details-row-size">
 
@@ -95,7 +94,14 @@
                         <div class="product-content">
                             <p>{{ product.short_description|safe }} </p>
                         </div><!-- End .product-content -->
+                        <div class="stock-col"><span class="in-stock">
+                            {% if product.stock > 0 %}
+                            <span>In Stock</span>
+                            {% else %}
+                            <span>Out of Stock</span>
+                            {% endif %}</span></div>
                         <div class="details-filter-row details-row-size">
+
                             <form action="{% url 'cart-add' product_id=product.id %}" method="post">
                                 {% csrf_token %}
                                 <div class="form-group">
@@ -108,12 +114,24 @@
                                     <button type="submit" class="btn-product btn-cart" {% if product.stock <= 0 %} disabled {% endif %}><span>add to cart</span></button>
                                 </div>
                             </form>
+
+                            <form action="{% url 'wishlist-add-remove' product.id %}" method="post" class="details-action-wrapper">
+                                {% csrf_token %}
+                                <button type="submit" class="btn-product-icon btn-wishlist {% if product.id in is_in_wishlist %}in-wishlist{% endif %}" 
+                                    title="{% if product.id in is_in_wishlist %}Remove from wishlist{% else %}Add to wishlist{% endif %}">
+                                    <span class="wishlist-icon">   </span> <!-- Optional: Add an icon here -->
+                                    <span>  Add to wishlist </span>
+                                </button>
+                                
+                              
+                            </form>
+
                             <div class="details-action-wrapper">
-                                <a href="#" class="btn-product btn-wishlist" title="Wishlist"><span>Add to
-                                        Wishlist</span></a>
-                                <a href="#" class="btn-product btn-compare" title="Compare"><span>Add to
-                                        Compare</span></a>
-                            </div><!-- End .details-action-wrapper -->
+                                  <a href="#" class="btn-product btn-compare" title="Compare"><span>Add to
+                                    Compare</span></a>
+                            </div>
+                         
+                            
                         </div><!-- End .product-details-action -->
 
                         <div class="product-details-footer">
@@ -158,10 +176,7 @@
                     <a class="nav-link" id="product-shipping-link" data-toggle="tab" href="#product-shipping-tab"
                         role="tab" aria-controls="product-shipping-tab" aria-selected="false">Shipping & Returns</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="product-review-link" data-toggle="tab" href="#product-review-tab" role="tab"
-                        aria-controls="product-review-tab" aria-selected="false">Reviews ({{ reviews|length }})</a>
-                </li>
+               
             </ul>
             <div class="tab-content">
 
