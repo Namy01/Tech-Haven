@@ -6,6 +6,7 @@ def navigations(request):
     categories_nav = Category.objects.all()[:7]
     procount = Product.objects.all()
     cart_item_count = CartItem.objects.all()
+    WishList_item_count = WishList.objects.all()
    
 
     
@@ -17,6 +18,7 @@ def navigations(request):
         "categories_nav" : categories_nav,
         "procount": procount,
         "cart_item_count": cart_item_count,
+        "WishList_item_count": cart_item_count,
        
         
     }

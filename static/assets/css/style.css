@@ -3957,6 +3957,7 @@ p {
   font-size: 1rem;
   line-height: 1;
   color: #fff;
+  background-color: green;
 }
 .header-12 .wishlist .wishlist-count {
   position: absolute;
