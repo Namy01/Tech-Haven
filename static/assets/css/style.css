@@ -7801,8 +7801,9 @@ p {
   display: block;
   max-width: none;
   width: 100%;
-  height: 437px;
+  height: auto;
 }
+
 .banner.banner-menu img {
   height: 100%;
 }
@@ -8659,18 +8660,18 @@ small.form-text {
   background-color: #333;
 }
 .custom-checkbox
-  .custom-control-input:indeterminate
-  ~ .custom-control-label::before {
+.custom-control-input:indeterminate
+~ .custom-control-label::before {
   background-color: #333;
 }
 .custom-checkbox
-  .custom-control-input:disabled:checked
-  ~ .custom-control-label::before {
+.custom-control-input:disabled:checked
+~ .custom-control-label::before {
   background-color: rgba(51, 51, 51, 0.5);
 }
 .custom-checkbox
-  .custom-control-input:disabled:indeterminate
-  ~ .custom-control-label::before {
+.custom-control-input:disabled:indeterminate
+~ .custom-control-label::before {
   background-color: rgba(51, 51, 51, 0.5);
 }
 .custom-checkbox .custom-control-input:checked ~ .custom-control-label::after {
@@ -8685,8 +8686,8 @@ small.form-text {
   border-radius: 50%;
 }
 .custom-control.custom-radio
-  .custom-control-input:checked
-  ~ .custom-control-label::before {
+.custom-control-input:checked
+~ .custom-control-label::before {
   border-color: #006400;
   background-color: #fff;
 }
@@ -8698,8 +8699,8 @@ small.form-text {
   left: 0.5rem;
 }
 .custom-control.custom-radio
-  .custom-control-input:checked
-  ~ .custom-control-label::after {
+.custom-control-input:checked
+~ .custom-control-label::after {
   background-image: none !important;
   z-index: 2;
   background-color: #006400;
@@ -8989,6 +8990,7 @@ small.form-text {
   font-size: 1.6rem;
   letter-spacing: -0.01em;
 }
+
 .pagination {
   border-radius: 0;
   align-items: center;
@@ -16496,5 +16498,38 @@ input[type="number"] {
 .video-popup .popup-content {
   overflow: visible; /* Ensure button doesn't get clipped */
 }
+
+
+/* Container styling for smooth zoom */
+.product-main-image {
+  position: relative;
+  overflow: hidden; /* Hide overflow to prevent image from going outside */
+}
+
+/* Image styling for zoom effect */
+#product-zoom {
+  transition: transform 0.5s ease; /* Smooth transition */
+  width: 100%; /* Ensure full container width */
+  height: auto; /* Maintain aspect ratio */
+}
+
+/* Zoom effect on hover */
+.product-main-image:hover #product-zoom {
+  transform: scale(1.5); /* Adjust the scale for desired zoom level */
+  cursor: zoom-in; /* Change cursor to indicate zoom */
+}
+
+/* Optional: Button positioning */
+.btn-product-gallery {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 5px;
+  border-radius: 5px;
+  color: #fff;
+  text-decoration: none;
+}
+
 
 

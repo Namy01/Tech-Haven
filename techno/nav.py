@@ -18,7 +18,7 @@ def navigations(request):
         "categories_nav" : categories_nav,
         "procount": procount,
         "cart_item_count": cart_item_count,
-        "WishList_item_count": cart_item_count,
+        "WishList_item_count": WishList_item_count,
        
         
     }

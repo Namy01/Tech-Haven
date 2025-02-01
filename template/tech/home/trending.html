@@ -169,7 +169,7 @@
                         {% endif %}
                         {% endfor %}
                                     <a href="{% url 'product-detail' product.id %}">
-                                        <img src="{{ product.main_image.url }}" alt="Product image" class="product-image" width="200px">
+                                        <img src="{{ product.main_image.url }}" alt="Product image" class="product-image">
                                     </a>
 
                                     <form action="{% url 'wishlist-add-remove' product.id %}" method="post" class="product-action-vertical">
