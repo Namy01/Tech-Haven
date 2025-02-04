@@ -1,3 +1,4 @@
+#requirement for this application
 Django==5.1.5
 pillow==11.1.0
 django-summernote==0.8.20.0
