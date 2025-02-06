@@ -55,5 +55,5 @@ The primary goal of this project was to deepen my understanding of Django and th
 6. **Open in Browser:**
    - Open `http://127.0.0.1:8000/` in your browser to view the application.
 
-Feel free to explore the codebase and provide any feedback! 📩
+Feel free to explore the codebase and provide any feedback! 📩 
 
