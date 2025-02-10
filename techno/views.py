@@ -7,7 +7,8 @@ from django.urls import reverse_lazy
 from .models import Advertisement, Cart, CartItem, Product, Review, Tag, Category, WishList
 from django.views.generic import ListView, DetailView, TemplateView, CreateView
 from django.db.models import Avg
-
+from django.core.paginator import PageNotAnInteger, Paginator
+from django.db.models import Q
 
 class HomeView(ListView):
     model = Product
@@ -222,6 +223,25 @@ class WishListView(View):
         return redirect('wishlist')
 
     
+class ProductSearchView(View):
+    template_name = "tech/list/list.html"
+
+    def get(self, request, *args, **kwargs):
+        query = request.GET["query"]
+        products = Product.objects.filter(
+            (Q(name__icontains=query)))
+
+        
+
+        return render(
+            request,
+            self.template_name,
+            {"products":products, "query": query},
+        )
+    
+
+
+
 
      
 

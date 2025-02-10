@@ -18,5 +18,6 @@ urlpatterns = [
     
     path('wishlist/', views.WishListView.as_view(), name='wishlist'),
     path('wishlist/<int:product_id>/', views.WishListView.as_view(), name='wishlist-add-remove'),
+    path("product-search/", views.ProductSearchView.as_view(), name="product-search"),
 
 ]
