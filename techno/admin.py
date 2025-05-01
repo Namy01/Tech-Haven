@@ -1,5 +1,5 @@
 from django.contrib import admin
-from techno.models import Addcategory, Advertisement, Category, Product, ProductImage, Review, Tag
+from techno.models import Addcategory, Advertisement, Category, Product, ProductImage, Review, Tag, Newsletter
 from django_summernote.admin import SummernoteModelAdmin
 
 
@@ -9,7 +9,7 @@ admin.site.register(ProductImage)
 admin.site.register(Addcategory)
 admin.site.register(Advertisement)
 admin.site.register(Review)
-
+admin.site.register(Newsletter)
 
 
 

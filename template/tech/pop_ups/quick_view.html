@@ -18,8 +18,9 @@
                     </div>
                     
                     <p>
-                        {{ product.description|truncatewords:40 }}
+                        {{ product.description|striptags|truncatewords:40 }}
                     </p>
+                    
                     <div class="details-filter-row details-row-size">
 
                         {% for tag in product.tags.all %}

@@ -1,0 +1,38 @@
+{% extends "tech/base.html" %}
+{% load static %}
+{% block content %}
+
+{% if form.errors and form.non_field_errors %}
+    {{ form.non_field_errors }}
+{% endif %}
+
+<div style="display: flex; justify-content: center; align-items: center; min-height: 80vh; background-color: #f8f9fa;">
+    <div style="display: flex; background: #fff; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); border-radius: 8px; overflow: hidden; max-width: 800px; width: 100%;">
+        
+        <!-- Image Section -->
+        <div style="flex: 1; background-color: #e9ecef; display: flex; align-items: center; justify-content: center;">
+            <img src="{% static 'assets/images/popup/newsletter/img.png' %}" alt="Login Illustration" style="max-width: 100%; height: auto;" />
+        </div>
+
+        <!-- Login Form Section -->
+        <div style="flex: 1; padding: 40px;">
+            <h2 style="text-align: center; font-size: 24px; margin-bottom: 20px; font-weight: bold; color: #333;">Login</h2>
+            <form method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="username" class="form-label" style="font-weight: bold; color: #555;">Username</label>
+                    <input type="text" class="form-control" name="username" placeholder="Enter username" style="padding: 10px; border-radius: 5px; border: 1px solid #ddd;" />
+                    {{ form.username.errors }}
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label" style="font-weight: bold; color: #555;">Password</label>
+                    <input type="password" class="form-control" name="password" placeholder="Enter Password" style="padding: 10px; border-radius: 5px; border: 1px solid #ddd;" />
+                    {{ form.password.errors }}
+                </div>
+                <button class="btn btn-success" style="width: 100%; padding: 10px; background-color: #28a745; border: none; border-radius: 5px; color: #fff; font-size: 16px; font-weight: bold;">Login</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

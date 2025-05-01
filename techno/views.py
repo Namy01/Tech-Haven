@@ -2,13 +2,15 @@ from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
 from django.contrib import messages
-from techno.forms import ReviewForm
+from techno.forms import NewsletterForm, ReviewForm
 from django.urls import reverse_lazy
 from .models import Advertisement, Cart, CartItem, Product, Review, Tag, Category, WishList
 from django.views.generic import ListView, DetailView, TemplateView, CreateView
 from django.db.models import Avg
 from django.core.paginator import PageNotAnInteger, Paginator
 from django.db.models import Q
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 
 class HomeView(ListView):
     model = Product
@@ -121,7 +123,7 @@ class Quickview(DetailView):
 
 
 
-class AddToCartView(View):
+class AddToCartView(View, LoginRequiredMixin):
     def post(self, request, product_id):
         product = get_object_or_404(Product, id=product_id)
 
@@ -140,7 +142,7 @@ class AddToCartView(View):
         return redirect('cart_detail')
 
 
-class RemoveFromCartView(View):
+class RemoveFromCartView(View, LoginRequiredMixin):
     def post(self, request, cart_item_id):
         cart_item = get_object_or_404(CartItem, id=cart_item_id)
         cart_item.delete()
@@ -148,7 +150,7 @@ class RemoveFromCartView(View):
 
 
 
-class UpdateCartView(View):
+class UpdateCartView(View, LoginRequiredMixin):
     def post(self, request, cart_item_id):
         cart_item = get_object_or_404(CartItem, id=cart_item_id)
         new_quantity = int(request.POST.get('quantity', 1))
@@ -158,7 +160,7 @@ class UpdateCartView(View):
         return redirect('cart_detail')
 
 
-class UpdateShippingView(View):
+class UpdateShippingView(View, LoginRequiredMixin):
     def post(self, request):
         shipping_cost = int(request.POST.get("shipping", 0))
         cart = Cart.objects.get(user=request.user, is_active=True)
@@ -180,7 +182,7 @@ class UpdateShippingView(View):
         total = cart.get_total()
         return JsonResponse({"total": total}) 
 
-class CartDetailView(View):
+class CartDetailView(View, LoginRequiredMixin):
     def get(self, request):
         cart = Cart.objects.get(user=request.user, is_active=True)
         selected_shipping = request.session.get('selected_shipping', 0)  # Default to 0
@@ -194,7 +196,7 @@ class CartDetailView(View):
         }
         return render(request, "tech/cart/cart.html", context)
     
-class WishListView(View):
+class WishListView(View, LoginRequiredMixin):
     def get(self, request):
         if request.user.is_authenticated:
             wishlist_items = WishList.objects.filter(user=request.user)
@@ -239,6 +241,42 @@ class ProductSearchView(View):
             {"products":products, "query": query},
         )
     
+
+class NewsletterView(View):
+    def post(self, request):
+        is_ajax = request.headers.get("x-requested-with")
+        if is_ajax == "XMLHttpRequest":
+            form = NewsletterForm(request.POST)
+            if form.is_valid():
+                form.save()
+                return JsonResponse(
+                    {
+                        "success":True,
+                        "message":"Successfully subscribed to the newsletter.",
+
+                    },
+                    status = 201,
+
+                )
+            else:
+                 return JsonResponse(
+                    {
+                        "success":False,
+                        "message":"Cannot subscribe to newsletter.",
+
+                    },
+                    status = 400,
+                 )
+        else:
+            return JsonResponse(
+                    {
+                        "success":False,
+                        "message":"Cannot process . Must be an AJAX XMLHttpRequest.",
+
+                    },
+                    status = 400,
+                 )
+
 
 
 

@@ -35,7 +35,20 @@
                                     </div><!-- End .header-menu -->
                                 </div>
                             </li>
-                            <li><a href="#signin-modal" data-toggle="modal">Sign in / Sign up</a></li>
+                            {% if request.user.is_authenticated %}
+                                        <form action="{% url 'logout' %}" method="post" class="top-menu" style="display: inline;">
+                                            {% csrf_token %}
+                                            <button type="submit" title="Logout" class="link ml-3" style="background: transparent; border: none; padding: 0; cursor: pointer;">
+                                                Logout
+                                            </button>
+                                        </form>
+                                        
+                                    {% else %}
+                                        <a href="{% url 'login' %}" title="Login" id="loginBtn" class="link ml-3" style="background: transparent; border: none; padding: 0; cursor: pointer; ">
+                                            Login
+                                        </a>
+                                        
+                                    {% endif %}
                         </ul>
                     </li>
                 </ul><!-- End .top-menu -->

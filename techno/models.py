@@ -117,3 +117,10 @@ class WishList(Timestamp):
     
     def __str__(self):
         return self.product.name
+    
+
+class Newsletter(Timestamp):
+    email = models.EmailField(unique=True)
+
+    def __str__(self):
+        return self.email

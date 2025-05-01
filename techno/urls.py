@@ -15,7 +15,7 @@ urlpatterns = [
     path('cart-update/<int:cart_item_id>/', views.UpdateCartView.as_view(), name='update_cart'),
     path("cart-remove/<int:cart_item_id>/",  views.RemoveFromCartView.as_view(), name="cart-remove"),
     path("update-shipping/", views.UpdateShippingView.as_view(), name="update_shipping"),
-    
+    path("newsletter/", views.NewsletterView.as_view(), name="newsletter"),
     path('wishlist/', views.WishListView.as_view(), name='wishlist'),
     path('wishlist/<int:product_id>/', views.WishListView.as_view(), name='wishlist-add-remove'),
     path("product-search/", views.ProductSearchView.as_view(), name="product-search"),
